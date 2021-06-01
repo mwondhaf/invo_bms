@@ -25,7 +25,7 @@ const AllProducts = () => {
   const handleDelete = async (_id) => {
     try {
       await axios
-        .delete(`/products/${_id}`)
+        .delete(`https://invobms.herokuapp.com/api/products/${_id}`)
         .then(() => setWatchDelete(!watchDelete))
     } catch (error) {
       console.log(error)
