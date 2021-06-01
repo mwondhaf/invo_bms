@@ -23,9 +23,9 @@ const theme = createMuiTheme({
     }
   },
   typography: {
-    fontFamily: "Inter",
-    fontWeightLight: 400,
-    fontWeightRegular: 400,
+    fontFamily: "Segoe UI",
+    fontWeightLight: 200,
+    fontWeightRegular: 500,
     fontWeightMedium: 500,
     fontWeightBold: 700
   }

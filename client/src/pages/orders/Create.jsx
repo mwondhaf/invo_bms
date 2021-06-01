@@ -1,5 +1,8 @@
 import {
+  Box,
   Button,
+  Card,
+  CardContent,
   Container,
   Grid,
   List,
@@ -155,124 +158,138 @@ const Create = () => {
   }
 
   return (
-    <Container>
-      <Typography variant="h6">Create Order</Typography>
-      <form noValidate autoComplete="off" onSubmit={handleSubmit}>
-        <Autocomplete
-          size="small"
-          id="combo-box-demo"
-          className={classes.field}
-          options={customers}
-          getOptionSelected={(option, value) => option.id === value.id}
-          getOptionLabel={(option) => `${option.name} - ${option.phoneNumber}`}
-          onChange={(e, value) => setSelectedCustomer(value)}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="Select customer"
-              inputProps={{
-                ...params.inputProps
-              }}
-              required={true}
-              variant="outlined"
-              error={customerFieldError}
-            />
-          )}
-        />
-        {products && (
-          <>
-            <Autocomplete
-              size="small"
-              id="combo-box-products"
-              className={classes.field}
-              options={products}
-              getOptionSelected={(option, value) => option.id === value.id}
-              getOptionLabel={(option) =>
-                `${option.productName} - ${option.price}`
-              }
-              onChange={(e, value) => handleSelectedProducts(e, value)}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Select product"
-                  required
-                  variant="outlined"
-                  error={productFieldError}
-                />
-              )}
-            />
-            {selectedProducts.map((product) => (
-              <Grid
-                container
-                key={product._id}
-                component={Paper}
-                className={classes.container_item}
-              >
-                <Grid item xs={12} md={3}>
-                  <Typography variant="h6">{product.productName}</Typography>
-                </Grid>
-                <Grid item xs={6} md={2}>
+    <Grid item xs={12} md={6}>
+      <Box mt={-25}>
+        <Card>
+          <CardContent>
+            <Typography variant="h4" fontWeight="fontWeightBold">
+              Create Order
+            </Typography>
+            <form noValidate autoComplete="off" onSubmit={handleSubmit}>
+              <Autocomplete
+                size="small"
+                id="combo-box-demo"
+                className={classes.field}
+                options={customers}
+                getOptionSelected={(option, value) => option.id === value.id}
+                getOptionLabel={(option) =>
+                  `${option.name} - ${option.phoneNumber}`
+                }
+                onChange={(e, value) => setSelectedCustomer(value)}
+                renderInput={(params) => (
                   <TextField
-                    className={classes.field}
-                    defaultValue={product.quantity_ordered}
-                    onChange={(e) => handleSetNewItemQuantity(e, product)}
-                    label="Quantity"
-                    type="number"
-                    size="small"
-                    variant="outlined"
-                  />
-                </Grid>
-                <Grid item xs={6} md={3}>
-                  <TextField
-                    className={classes.field}
-                    label="Unit Price"
-                    variant="outlined"
-                    size="small"
-                    defaultValue={product.price}
-                    disabled
-                    InputProps={{
-                      readOnly: true
+                    {...params}
+                    label="Select customer"
+                    inputProps={{
+                      ...params.inputProps
                     }}
-                  />
-                </Grid>
-                <Grid item xs={6} md={2}>
-                  <TextField
-                    type="number"
-                    size="small"
-                    label="Selling Price / Unit"
-                    className={classes.field}
+                    required={true}
                     variant="outlined"
-                    onChange={(e) => handleSetNewItemPrice(e, product)}
-                    defaultValue={product.price}
+                    error={customerFieldError}
                   />
-                </Grid>
-                <Grid item xs={6} md={2}>
-                  <Button
-                    variant="contained"
-                    fullWidth
-                    size="medium"
+                )}
+              />
+              {products && (
+                <>
+                  <Autocomplete
+                    size="small"
+                    id="combo-box-products"
                     className={classes.field}
+                    options={products}
+                    getOptionSelected={(option, value) =>
+                      option.id === value.id
+                    }
+                    getOptionLabel={(option) =>
+                      `${option.productName} - ${option.price}`
+                    }
+                    onChange={(e, value) => handleSelectedProducts(e, value)}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="Select product"
+                        required
+                        variant="outlined"
+                        error={productFieldError}
+                      />
+                    )}
+                  />
+                  {selectedProducts.map((product) => (
+                    <Grid
+                      container
+                      key={product._id}
+                      component={Paper}
+                      className={classes.container_item}
+                    >
+                      <Grid item xs={12} md={3}>
+                        <Typography variant="h6">
+                          {product.productName}
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={6} md={2}>
+                        <TextField
+                          className={classes.field}
+                          defaultValue={product.quantity_ordered}
+                          onChange={(e) => handleSetNewItemQuantity(e, product)}
+                          label="Quantity"
+                          type="number"
+                          size="small"
+                          variant="outlined"
+                        />
+                      </Grid>
+                      <Grid item xs={6} md={3}>
+                        <TextField
+                          className={classes.field}
+                          label="Unit Price"
+                          variant="outlined"
+                          size="small"
+                          defaultValue={product.price}
+                          disabled
+                          InputProps={{
+                            readOnly: true
+                          }}
+                        />
+                      </Grid>
+                      <Grid item xs={6} md={2}>
+                        <TextField
+                          type="number"
+                          size="small"
+                          label="Selling Price / Unit"
+                          className={classes.field}
+                          variant="outlined"
+                          onChange={(e) => handleSetNewItemPrice(e, product)}
+                          defaultValue={product.price}
+                        />
+                      </Grid>
+                      <Grid item xs={6} md={2}>
+                        <Button
+                          variant="contained"
+                          fullWidth
+                          size="medium"
+                          className={classes.field}
+                          disableElevation
+                          onClick={() => handleRemoveItemSelected(product)}
+                        >
+                          Remove
+                        </Button>
+                      </Grid>
+                    </Grid>
+                  ))}
+                  <Button
                     disableElevation
-                    onClick={() => handleRemoveItemSelected(product)}
+                    variant="contained"
+                    type="submit"
+                    size="large"
+                    style={{ marginTop: 30 }}
                   >
-                    Remove
+                    create
                   </Button>
-                </Grid>
-              </Grid>
-            ))}
-            <Button
-              variant="contained"
-              color="primary"
-              type="submit"
-              size="large"
-              style={{ marginTop: 30 }}
-            >
-              create
-            </Button>
-          </>
-        )}
-      </form>
-    </Container>
+                </>
+              )}
+            </form>
+          </CardContent>
+        </Card>
+      </Box>
+    </Grid>
   )
 }
 

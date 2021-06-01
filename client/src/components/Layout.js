@@ -25,10 +25,9 @@ const drawerWidth = 240
 
 const useStyles = makeStyles((theme) => ({
   page: {
-    background: "#f9f9f9",
+    background: "#F7FCFC",
     width: "100%",
-    paddingTop: theme.spacing(2),
-    height: "100%"
+    paddingTop: theme.spacing(2)
   },
   drawer: {
     width: drawerWidth
@@ -94,12 +93,15 @@ const Layout = ({ children }) => {
       <div className={classes.page}>
         <Grid container justify="center">
           <Grid item xs={11}>
-            <Box mt={-25} className={classes.wrapper} borderRadius={5}>
+            {children}
+          </Grid>
+          {/* <Grid item xs={11}> */}
+          {/* <Box mt={-25} className={classes.wrapper} borderRadius={5}>
               <Box pt={3} height="100%">
                 {children}
               </Box>
-            </Box>
-          </Grid>
+            </Box> */}
+          {/* </Grid> */}
         </Grid>
       </div>
     </div>
