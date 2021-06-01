@@ -2,6 +2,7 @@ import { Container } from "@material-ui/core"
 import axios from "axios"
 import React, { useEffect, useState } from "react"
 import { useHistory } from "react-router"
+import api_url from "../../api/api"
 import TableTemplate from "../../components/TableTemplate"
 import useFetch from "../../composables/useFetch"
 
@@ -14,9 +15,7 @@ const AllProducts = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      axios
-        .get("https://invobms.herokuapp.com/api/products")
-        .then((res) => setProducts(res.data))
+      axios.get(`${api_url}/products`).then((res) => setProducts(res.data))
     }
 
     fetchProducts()
