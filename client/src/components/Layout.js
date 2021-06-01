@@ -27,7 +27,8 @@ const useStyles = makeStyles((theme) => ({
   page: {
     background: "#f9f9f9",
     width: "100%",
-    paddingTop: theme.spacing(2)
+    paddingTop: theme.spacing(2),
+    height: "100%"
   },
   drawer: {
     width: drawerWidth
@@ -86,14 +87,14 @@ const Layout = ({ children }) => {
     <div>
       {/* AppBar */}
 
-      <Box bgcolor="primary.main" color="white" pb={10}>
+      <Box bgcolor="primary.main" color="white" pb={25}>
         <AppBarNav />
       </Box>
 
       <div className={classes.page}>
         <Grid container justify="center">
           <Grid item xs={11}>
-            <Box mt={-10} className={classes.wrapper} borderRadius={8}>
+            <Box mt={-25} className={classes.wrapper} borderRadius={5}>
               <Box pt={3} height="100%">
                 {children}
               </Box>

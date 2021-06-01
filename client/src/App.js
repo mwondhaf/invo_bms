@@ -16,7 +16,10 @@ import ProductDetail from "./pages/products/ProductDetail"
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: "#00AD9F"
+      light: "#33b1a0",
+      main: "#009e89",
+      dark: "#006e5f",
+      contrastText: "#fff"
     }
   },
   typography: {
