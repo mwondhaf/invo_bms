@@ -28,7 +28,7 @@ const AddProduct = () => {
   const [cost, setCost] = useState("")
   const [brand, setBrand] = useState("")
 
-  const { data: categories } = useFetch("/categories")
+  const { data: categories } = useFetch(`${api_url}/categories`)
 
   const sale_price = price
 

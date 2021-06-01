@@ -52,8 +52,8 @@ const Create = () => {
 
   let each_sub_qty = 1
 
-  const { data: customers } = useFetch("/customers")
-  const { data: products } = useFetch("/products")
+  const { data: customers } = useFetch(`${api_url}/customers`)
+  const { data: products } = useFetch(`${api_url}/products`)
 
   const handleSetNewItemPrice = (e, product) => {
     console.log(product)
