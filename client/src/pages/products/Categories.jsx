@@ -97,7 +97,9 @@ const Categories = () => {
 
   return (
     <div>
-      <Button onClick={handleOpen}>Add Category</Button>
+      <Button onClick={handleOpen} variant="outlined" color="primary">
+        Add Category
+      </Button>
 
       {openModal && (
         <Box>

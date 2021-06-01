@@ -15,7 +15,9 @@ import ProductDetail from "./pages/products/ProductDetail"
 
 const theme = createMuiTheme({
   palette: {
-    primary: blue
+    primary: {
+      main: "#00AD9F"
+    }
   },
   typography: {
     fontFamily: "Inter",
