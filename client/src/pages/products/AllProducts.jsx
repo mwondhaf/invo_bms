@@ -14,7 +14,9 @@ const AllProducts = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      axios.get("/products").then((res) => setProducts(res.data))
+      axios
+        .get("https://invobms.herokuapp.com/api/products")
+        .then((res) => setProducts(res.data))
     }
 
     fetchProducts()
