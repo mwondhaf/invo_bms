@@ -11,6 +11,7 @@ import React, { useEffect, useState } from "react"
 import TableTemplate from "../../components/TableTemplate"
 import useFetch from "../../composables/useFetch"
 import axios from "axios"
+import api_url from "../../api/api"
 
 const useStyles = makeStyles((theme) => ({
   field: {
@@ -56,7 +57,7 @@ const Categories = () => {
 
   const handleDelete = (_id) => {
     try {
-      axios.delete(`/categories/${_id}`).then(() => {
+      axios.delete(`${api_url}/categories/${_id}`).then(() => {
         setWatchDelete(!watchDelete)
       })
     } catch (error) {
@@ -71,7 +72,7 @@ const Categories = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        await axios.get("/categories").then((res) => {
+        await axios.get(`${api_url}/categories`).then((res) => {
           setCatData(res.data)
         })
       } catch (error) {
@@ -85,7 +86,7 @@ const Categories = () => {
     e.preventDefault()
 
     try {
-      await axios.post("/categories", { name }).then(() => {
+      await axios.post(`${api_url}/categories`, { name }).then(() => {
         setWatchDelete(!watchDelete)
         setOpenModal(!openModal)
       })

@@ -3,6 +3,7 @@ import { green } from "@material-ui/core/colors"
 import axios from "axios"
 import React, { useState } from "react"
 import { useHistory } from "react-router"
+import api_url from "../../api/api"
 import Add from "../../components/products/Add"
 import useFetch from "../../composables/useFetch"
 
@@ -46,7 +47,7 @@ const AddProduct = () => {
 
     try {
       await axios
-        .post("/products", product)
+        .post(`${api_url}/products`, product)
         .then(() => history.push("/products"))
     } catch (error) {
       console.log(error)

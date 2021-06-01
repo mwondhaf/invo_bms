@@ -9,6 +9,7 @@ import {
 import axios from "axios"
 import React, { useEffect, useState } from "react"
 import { useHistory, useLocation, useParams } from "react-router"
+import api_url from "../../api/api"
 import useFetch from "../../composables/useFetch"
 
 const useStyles = makeStyles((theme) => ({
@@ -45,7 +46,7 @@ const EditProduct = () => {
 
     const updateProduct = async () => {
       await axios
-        .put(`/products/${product._id}`, newDetails)
+        .put(`${api_url}/products/${product._id}`, newDetails)
         .then(() =>
           history.push({ pathname: "/productdetails", item: product })
         )

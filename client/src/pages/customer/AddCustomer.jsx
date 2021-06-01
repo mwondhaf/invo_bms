@@ -11,6 +11,7 @@ import { Save } from "react-feather"
 import { useHistory } from "react-router"
 import Alert from "@material-ui/lab/Alert"
 import axios from "axios"
+import api_url from "../../api/api"
 
 const useStyles = makeStyles((theme) => ({
   field: {
@@ -41,7 +42,7 @@ const AddCustomer = () => {
 
     try {
       await axios
-        .post("/customers", customer)
+        .post(`${api_url}/customers`, customer)
         .then(() => history.push("/customers"))
     } catch (error) {
       setAlreadyExist(`Customer with phone: ${phoneNumber} already exists`)

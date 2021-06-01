@@ -20,6 +20,7 @@ import InboxIcon from "@material-ui/icons/Inbox"
 import { Backspace, FormatListBulleted, Save } from "@material-ui/icons"
 import axios from "axios"
 import { Delete } from "react-feather"
+import api_url from "../../api/api"
 
 const useStyles = makeStyles((theme) => ({
   field: {
@@ -141,7 +142,9 @@ const Create = () => {
       order.total_price = prices_sum
 
       try {
-        await axios.post("/orders", order).then((res) => console.log(res))
+        await axios
+          .post(`${api_url}/orders`, order)
+          .then((res) => console.log(res))
       } catch (error) {
         console.log(error)
       }

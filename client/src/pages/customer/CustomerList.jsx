@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react"
 import TableTemplate from "../../components/TableTemplate"
 import axios from "axios"
 import Alert from "@material-ui/lab/Alert"
+import api_url from "../../api/api"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,7 +23,7 @@ const CustomerList = () => {
 
   useEffect(() => {
     const fetchCustomers = async () => {
-      axios.get("/customers").then((res) => {
+      axios.get(`${api_url}/customers`).then((res) => {
         setData(res.data)
         setLoading(false)
       })
@@ -31,7 +32,7 @@ const CustomerList = () => {
   }, [watchDelete])
 
   const handleDelete = (_id) => {
-    axios.delete(`/customers/${_id}`).then(() => {
+    axios.delete(`${api_url}/customers/${_id}`).then(() => {
       setWatchDelete(!watchDelete)
       setDeleteAlert("Deleted Successfully")
     })
