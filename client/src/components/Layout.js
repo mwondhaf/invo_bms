@@ -1,8 +1,10 @@
 import {
   AppBar,
+  Box,
   Collapse,
   Container,
   Drawer,
+  Grid,
   List,
   ListItem,
   ListItemIcon,
@@ -56,6 +58,9 @@ const useStyles = makeStyles((theme) => ({
   toolbar: theme.mixins.toolbar,
   date: {
     flexGrow: 1
+  },
+  wrapper: {
+    backgroundColor: "#fff"
   }
 }))
 
@@ -81,72 +86,20 @@ const Layout = ({ children }) => {
     <div>
       {/* AppBar */}
 
-      <AppBarNav />
-
-      {/* <NavDrawer isMenuOpen={isMenuOpen} /> */}
-
-      {/* <AppBar position="fixed" className={classes.appbar} elevation={0}>
-        <Toolbar>
-          <Typography className={classes.date}>
-            Today is {format(new Date(), "do MMM Y")}
-          </Typography>
-          <Typography>Frank</Typography>
-        </Toolbar>
-      </AppBar> */}
-
-      {/* <NavDrawer /> */}
-      {/* nav bar */}
-      {/* <Drawer
-        className={classes.drawer}
-        anchor="left"
-        variant="permanent"
-        classes={{ paper: classes.drawerPaper }}
-      >
-        <div className={classes.title}>
-          <Typography variant="h5">Frank Orders</Typography>
-        </div>
-
-        <List>
-          {orderMenu.map(({ text, icon, path, options }, index) => (
-            <div key={index}>
-              <ListItem
-                button
-                onClick={() => {
-                  handleExpanded(index)
-                }}
-              >
-                <ListItemIcon>{icon}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-
-              <Collapse in={index === expanded} timeout="auto" unmountOnExit>
-                <List>
-                  {options.map(({ path, icon, text, index }) => (
-                    <ListItem
-                      key={index}
-                      button
-                      onClick={() => {
-                        history.push(path)
-                      }}
-                      className={[
-                        location.pathname === path ? classes.active_sub : null,
-                        classes.sub_menu
-                      ]}
-                    >
-                      <ListItemIcon>{icon}</ListItemIcon>
-                      <ListItemText primary={text} />
-                    </ListItem>
-                  ))}
-                </List>
-              </Collapse>
-            </div>
-          ))}
-        </List>
-      </Drawer> */}
+      <Box bgcolor="primary.main" color="white" pb={10}>
+        <AppBarNav />
+      </Box>
 
       <div className={classes.page}>
-        {/* <div className={classes.toolbar}></div> */}
-        <Container>{children}</Container>
+        <Grid container justify="center">
+          <Grid item xs={11}>
+            <Box mt={-10} className={classes.wrapper} borderRadius={8}>
+              <Box pt={3} height="100%">
+                {children}
+              </Box>
+            </Box>
+          </Grid>
+        </Grid>
       </div>
     </div>
   )
