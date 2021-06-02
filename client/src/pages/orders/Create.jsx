@@ -162,7 +162,7 @@ const Create = () => {
       <Box mt={-25}>
         <Card>
           <CardContent>
-            <Typography variant="h4" fontWeight="fontWeightBold">
+            <Typography variant="h5" style={{ fontWeight: "900" }}>
               Create Order
             </Typography>
             <form noValidate autoComplete="off" onSubmit={handleSubmit}>

@@ -23,11 +23,11 @@ const theme = createMuiTheme({
     }
   },
   typography: {
-    fontFamily: "Segoe UI",
-    fontWeightLight: 200,
-    fontWeightRegular: 500,
+    fontFamily: "Inter",
+    fontWeightLight: 300,
+    fontWeightRegular: 400,
     fontWeightMedium: 500,
-    fontWeightBold: 700
+    fontWeightBold: 900
   }
 })
 

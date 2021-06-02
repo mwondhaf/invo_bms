@@ -1,32 +1,10 @@
-/* @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap"); */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;900&display=swap");
 /* @import url("http://fonts.cdnfonts.com/css/segoe-ui-4"); */
-
-@font-face {
-  font-family: SegoeUI;
-  src: local("Segoe UI Semibold"),
-    url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/semibold/latest.woff2)
-      format("woff2"),
-    url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/semibold/latest.woff)
-      format("woff"),
-    url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/semibold/latest.ttf)
-      format("truetype");
-  font-weight: 600;
-}
-@font-face {
-  font-family: SegoeUI;
-  src: local("Segoe UI Bold"),
-    url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/bold/latest.woff2)
-      format("woff2"),
-    url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/bold/latest.woff)
-      format("woff"),
-    url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/bold/latest.ttf)
-      format("truetype");
-  font-weight: 700;
-}
 
 body {
   margin: 0;
   height: 100%;
+
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
