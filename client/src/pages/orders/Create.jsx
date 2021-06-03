@@ -4,17 +4,20 @@ import {
   Card,
   CardContent,
   Container,
+  Divider,
   Grid,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
   makeStyles,
+  MenuItem,
   Paper,
+  Select,
   TextField,
   Typography
 } from "@material-ui/core"
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { useHistory } from "react-router"
 import Autocomplete from "@material-ui/lab/Autocomplete"
 import useFetch from "../../composables/useFetch"
@@ -41,20 +44,15 @@ const useStyles = makeStyles((theme) => ({
 const Create = () => {
   const classes = useStyles()
 
-  const [title, setTitle] = useState("")
-  const [details, setDetails] = useState("")
   const [customerFieldError, setCustomerFieldError] = useState(false)
   const [productFieldError, setProductFieldError] = useState(false)
 
-  const [detailsError, setDetailsError] = useState(false)
   const [selectedCustomer, setSelectedCustomer] = useState(null)
   const [selectedProducts, setSelectedProducts] = useState([])
-  const [itemsWithPriceToBeUpdated, setItemsWithPriceToBeUpdated] = useState([])
-  const [eachProductTotalCost, setEachProductTotalCost] = useState("")
-  const [eachSubQuantity, setEachSubQuantity] = useState(1)
 
   let each_sub_qty = 1
 
+  const history = useHistory()
   const { data: customers } = useFetch(`${api_url}/customers`)
   const { data: products } = useFetch(`${api_url}/products`)
 
@@ -89,8 +87,6 @@ const Create = () => {
     const qty = parseFloat(actualProduct.quantity_ordered)
     each_sub_qty = qty
   }
-
-  useEffect(() => {}, [])
 
   const handleSelectedProducts = (e, value) => {
     if (value) {
@@ -129,6 +125,7 @@ const Create = () => {
         customer_name: selectedCustomer.name,
         customer_phone: selectedCustomer.phoneNumber,
         customer_address: selectedCustomer.address,
+        // order_id: Math.floor(Math.random() * 10000),
         products: selectedProducts
       }
 
@@ -145,9 +142,14 @@ const Create = () => {
       order.total_price = prices_sum
 
       try {
-        await axios
-          .post(`${api_url}/orders`, order)
-          .then((res) => console.log(res))
+        await axios.post(`${api_url}/orders`, order).then((res) => {
+          console.log(res)
+          localStorage.setItem("order", res.data.order_id)
+          history.push(`/checkout/${res.data.order_id}`)
+        })
+        // await axios
+        // .post(`${api_url}/orders`, order)
+        // .then((res) => console.log(res))
       } catch (error) {
         console.log(error)
       }
@@ -232,7 +234,9 @@ const Create = () => {
                         <TextField
                           className={classes.field}
                           defaultValue={product.quantity_ordered}
-                          onChange={(e) => handleSetNewItemQuantity(e, product)}
+                          onChange={(e) => {
+                            handleSetNewItemQuantity(e, product)
+                          }}
                           label="Quantity"
                           type="number"
                           size="small"
@@ -277,15 +281,22 @@ const Create = () => {
                       </Grid>
                     </Grid>
                   ))}
-                  <Button
-                    disableElevation
-                    variant="contained"
-                    type="submit"
-                    size="large"
-                    style={{ marginTop: 30 }}
-                  >
-                    create
-                  </Button>
+                  <Divider />
+                  <Grid container>
+                    <Grid item>
+                      <Box>
+                        <Button
+                          disableElevation
+                          variant="contained"
+                          type="submit"
+                          size="large"
+                          style={{ marginTop: 30 }}
+                        >
+                          create
+                        </Button>
+                      </Box>
+                    </Grid>
+                  </Grid>
                 </>
               )}
             </form>

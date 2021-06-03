@@ -2,164 +2,183 @@
   "orders": [
     {
       "customer_name": "Frank Mwondha",
-      "customer_phone": "554259201",
+      "customer_phone": 554259201,
       "customer_address": "Dubai",
       "products": [
         {
-          "productName": "Adidas Shoes",
+          "price": 2000,
+          "_id": "60b37e51e93fea37b805b91e",
+          "productName": "Nike Sneakers",
           "category": "Shoes",
-          "quantity": "10",
-          "sale_price": "8000",
-          "price": "120000",
-          "cost": "75000",
-          "brand": "Adidas",
-          "id": 15,
-          "quantity_ordered": "10000",
-          "old_price": "120000"
+          "quantity": 200,
+          "sale_price": 2000,
+          "cost": 1000,
+          "brand": "",
+          "createdAt": "2021-05-30T12:00:17.019Z",
+          "updatedAt": "2021-05-30T12:00:48.590Z",
+          "__v": 0,
+          "quantity_ordered": 1
         }
       ],
-      "total_price": 80000000,
+      "total_price": 2000,
       "id": 1
     },
     {
-      "customer_name": "suziie",
-      "customer_phone": "444",
-      "customer_address": "Kampala",
+      "customer_name": "Frank Mwondha",
+      "customer_phone": 554259201,
+      "customer_address": "Dubai",
       "products": [
         {
-          "productName": "Nike Air Maxes",
+          "price": 2000,
+          "_id": "60b37e51e93fea37b805b91e",
+          "productName": "Nike Sneakers",
           "category": "Shoes",
-          "quantity": "10dd",
-          "price": "150000",
-          "cost": "100000",
-          "brand": "Nike",
-          "id": 6,
-          "quantity_ordered": "12",
-          "sale_price": "1500004",
-          "old_price": "150000"
-        },
-        {
-          "productName": "Adidas Shoes",
-          "category": "Shoes",
-          "quantity": "10",
-          "sale_price": "45000",
-          "price": "120000",
-          "cost": "75000",
-          "brand": "Adidas",
-          "id": 15,
-          "quantity_ordered": "10",
-          "old_price": "120000"
+          "quantity": 200,
+          "sale_price": 2000,
+          "cost": 1000,
+          "brand": "",
+          "createdAt": "2021-05-30T12:00:17.019Z",
+          "updatedAt": "2021-05-30T12:00:48.590Z",
+          "__v": 0,
+          "quantity_ordered": 1
         }
       ],
-      "total_price": 18450048,
+      "total_price": 2000,
       "id": 2
     },
     {
       "customer_name": "Frank Mwondha",
-      "customer_phone": "0554259201",
+      "customer_phone": 554259201,
       "customer_address": "Dubai",
+      "order_id": 5170,
       "products": [
         {
-          "productName": "Adidas Shoes",
+          "price": 2000,
+          "_id": "60b37e51e93fea37b805b91e",
+          "productName": "Nike Sneakers",
           "category": "Shoes",
-          "quantity": "10",
-          "sale_price": "40000",
-          "price": "120000",
-          "cost": "75000",
-          "brand": "Adidas",
-          "id": 15,
-          "quantity_ordered": "12",
-          "old_price": "120000"
-        },
-        {
-          "productName": "Nike Air Maxes",
-          "category": "Shoes",
-          "quantity": "10dd",
-          "price": "150000",
-          "cost": "100000",
-          "brand": "Nike",
-          "id": 6,
-          "quantity_ordered": "1000",
-          "sale_price": "45700",
-          "old_price": "150000"
+          "quantity": 200,
+          "sale_price": 2000,
+          "cost": 1000,
+          "brand": "",
+          "createdAt": "2021-05-30T12:00:17.019Z",
+          "updatedAt": "2021-05-30T12:00:48.590Z",
+          "__v": 0,
+          "quantity_ordered": 1
         }
       ],
-      "total_price": 46180000,
+      "total_price": 2000,
       "id": 3
     },
     {
       "customer_name": "Frank Mwondha",
-      "customer_phone": "0554259201",
+      "customer_phone": 554259201,
       "customer_address": "Dubai",
+      "order_id": 5227,
       "products": [
         {
-          "productName": "Adidas Shoes",
+          "price": 2000,
+          "_id": "60b37e51e93fea37b805b91e",
+          "productName": "Nike Sneakers",
           "category": "Shoes",
-          "quantity": "10",
-          "sale_price": "40000",
-          "price": "120000",
-          "cost": "75000",
-          "brand": "Adidas",
-          "id": 15,
-          "quantity_ordered": "12",
-          "old_price": "120000"
-        },
-        {
-          "productName": "Nike Air Maxes",
-          "category": "Shoes",
-          "quantity": "10dd",
-          "price": "150000",
-          "cost": "100000",
-          "brand": "Nike",
-          "id": 6,
-          "quantity_ordered": "1000",
-          "sale_price": "45700",
-          "old_price": "150000"
-        },
-        {
-          "productName": "box",
-          "category": "category",
-          "quantity": "33",
-          "price": "5000",
-          "cost": "5000",
-          "brand": "brank",
-          "id": 7,
-          "quantity_ordered": "122"
+          "quantity": 200,
+          "sale_price": 2000,
+          "cost": 1000,
+          "brand": "",
+          "createdAt": "2021-05-30T12:00:17.019Z",
+          "updatedAt": "2021-05-30T12:00:48.590Z",
+          "__v": 0,
+          "quantity_ordered": 1
         }
       ],
-      "total_price": null,
+      "total_price": 2000,
       "id": 4
     },
     {
-      "customer_name": "suziie",
-      "customer_phone": "444",
-      "customer_address": "Kampala",
+      "customer_name": "Frank Mwondha",
+      "customer_phone": 554259201,
+      "customer_address": "Dubai",
+      "order_id": 5766,
       "products": [
         {
-          "productName": "Adidas Shoes",
+          "price": 2000,
+          "_id": "60b37e51e93fea37b805b91e",
+          "productName": "Nike Sneakers",
           "category": "Shoes",
-          "quantity": "10",
-          "sale_price": "120000",
-          "price": "120000",
-          "cost": "75000",
-          "brand": "Adidas",
-          "id": 15,
+          "quantity": 200,
+          "sale_price": 2000,
+          "cost": 1000,
+          "brand": "",
+          "createdAt": "2021-05-30T12:00:17.019Z",
+          "updatedAt": "2021-05-30T12:00:48.590Z",
+          "__v": 0,
           "quantity_ordered": 1
         },
         {
-          "productName": "Polo T-Shirt",
-          "category": "Clothes",
-          "quantity": "10",
-          "sale_price": "25000",
-          "price": "25000",
-          "cost": "15000",
-          "brand": "Raulph Lauren",
-          "id": 16,
+          "price": 2000,
+          "_id": "60b398fde550e346d4315d0d",
+          "productName": "Phone",
+          "category": "Soft",
+          "quantity": 50,
+          "sale_price": 2000,
+          "cost": 1500,
+          "brand": "",
+          "createdAt": "2021-05-30T13:54:05.720Z",
+          "updatedAt": "2021-05-30T13:54:05.720Z",
+          "__v": 0,
           "quantity_ordered": 1
         }
       ],
-      "total_price": 145000,
+      "total_price": 4000,
       "id": 5
+    },
+    {
+      "customer_name": "Frank Mwondha",
+      "customer_phone": 554259201,
+      "customer_address": "Dubai",
+      "order_id": 5130,
+      "products": [
+        {
+          "price": 2000,
+          "_id": "60b37e51e93fea37b805b91e",
+          "productName": "Nike Sneakers",
+          "category": "Shoes",
+          "quantity": 200,
+          "sale_price": 2000,
+          "cost": 1000,
+          "brand": "",
+          "createdAt": "2021-05-30T12:00:17.019Z",
+          "updatedAt": "2021-05-30T12:00:48.590Z",
+          "__v": 0,
+          "quantity_ordered": 1
+        }
+      ],
+      "total_price": 2000,
+      "id": 6
+    },
+    {
+      "customer_name": "Frank Mwondha",
+      "customer_phone": 554259201,
+      "customer_address": "Dubai",
+      "order_id": 1013,
+      "products": [
+        {
+          "price": 2000,
+          "_id": "60b37e51e93fea37b805b91e",
+          "productName": "Nike Sneakers",
+          "category": "Shoes",
+          "quantity": 200,
+          "sale_price": 2000,
+          "cost": 1000,
+          "brand": "",
+          "createdAt": "2021-05-30T12:00:17.019Z",
+          "updatedAt": "2021-05-30T12:00:48.590Z",
+          "__v": 0,
+          "quantity_ordered": 1
+        }
+      ],
+      "total_price": 2000,
+      "id": 7
     }
   ],
   "customers": [

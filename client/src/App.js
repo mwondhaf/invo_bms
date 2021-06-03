@@ -12,6 +12,7 @@ import AllProducts from "./pages/products/AllProducts"
 import Categories from "./pages/products/Categories"
 import EditProduct from "./pages/products/EditProduct"
 import ProductDetail from "./pages/products/ProductDetail"
+import CheckOut from "./pages/orders/CheckOut"
 
 const theme = createMuiTheme({
   palette: {
@@ -67,6 +68,9 @@ function App() {
             </Route>
             <Route exact path="/customers">
               <CustomerList />
+            </Route>
+            <Route exact path="/checkout/:id">
+              <CheckOut />
             </Route>
             <Route path="*">
               <h2>Not found</h2>
