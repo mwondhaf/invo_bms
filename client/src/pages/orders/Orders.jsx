@@ -1,16 +1,8 @@
-import {
-  Typography,
-  AppBar,
-  Button,
-  Container,
-  Grid,
-  IconButton,
-  Paper,
-  Toolbar,
-  makeStyles
-} from "@material-ui/core"
-import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline"
+import { Container, makeStyles } from "@material-ui/core"
 import React, { useEffect, useState } from "react"
+import { DataGrid } from "@material-ui/data-grid"
+import axios from "axios"
+import api_url from "../../api/api"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,47 +19,55 @@ const useStyles = makeStyles((theme) => ({
 
 const Orders = () => {
   const [orders, setOrders] = useState([])
+  console.log(orders)
 
   const classes = useStyles()
 
   useEffect(() => {
-    fetch("http://localhost:8000/notes")
-      .then((res) => res.json())
-      .then((data) => setOrders(data))
+    const fetchOrders = async () => {
+      await axios.get(`${api_url}/orders`).then((res) => {
+        // console.log(res.data)
+        setOrders(res.data)
+      })
+    }
+    fetchOrders()
+    // fetch("http://localhost:8000/notes")
+    //   .then((res) => res.json())
+    //   .then((data) => setOrders(data))
   }, [])
+
+  const columns = [
+    // { field: "_id", headerName: "ID", width: 70 },
+    { field: "order_id", headerName: "ORDER ID", width: 130 },
+    { field: "customer_name", headerName: "CUSTOMER", width: 130 },
+    {
+      field: "customer_phone",
+      headerName: "PHONE",
+      width: 200
+    },
+    {
+      description: "This column has a value getter and is not sortable.",
+      sortable: false,
+      width: 160
+    }
+  ]
+
+  const rows = [
+    { _id: 1, lastName: "Snow", firstName: "Jon", age: 35 },
+    { _id: 2, lastName: "Lannister", firstName: "Cersei", age: 42 }
+  ]
 
   return (
     <Container>
-      <Grid container>
-        <Grid container>
-          <Grid item className={classes.root}>
-            <AppBar position="static" color="transparent">
-              <Toolbar>
-                <IconButton
-                  edge="start"
-                  className={classes.menuButton}
-                  aria-label="menu"
-                ></IconButton>
-                <Typography variant="h6" className={classes.title}>
-                  <Button
-                    startIcon={<AddCircleOutlineIcon />}
-                    color="secondary"
-                    variant="contained"
-                  >
-                    New Order
-                  </Button>
-                </Typography>
-                <Button color="inherit">Login</Button>
-              </Toolbar>
-            </AppBar>
-          </Grid>
-        </Grid>
-        {orders.map((order) => (
-          <Grid item key={order.id} xs={12} md={6} lg={4}>
-            <Paper>{order.title}</Paper>
-          </Grid>
-        ))}
-      </Grid>
+      <div style={{ height: 400, width: "100%" }}>
+        <DataGrid
+          getRowId={(row) => row._id}
+          rows={orders}
+          columns={columns}
+          pageSize={7}
+          checkboxSelection
+        />
+      </div>
     </Container>
   )
 }

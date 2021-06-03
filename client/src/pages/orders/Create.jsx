@@ -159,10 +159,13 @@ const Create = () => {
 
   return (
     <Grid item xs={12} md={6}>
-      <Box mt={-25}>
+      <Box mt={-24}>
         <Card>
-          <CardContent>
-            <Typography variant="h5" style={{ fontWeight: "900" }}>
+          <CardContent style={{ marginTop: 24 }}>
+            <Typography
+              variant="h5"
+              style={{ fontWeight: "900", color: "#2E3C42" }}
+            >
               Create Order
             </Typography>
             <form noValidate autoComplete="off" onSubmit={handleSubmit}>

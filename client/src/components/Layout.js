@@ -1,6 +1,7 @@
 import {
   AppBar,
   Box,
+  Button,
   Collapse,
   Container,
   Drawer,
@@ -15,11 +16,8 @@ import {
   Typography
 } from "@material-ui/core"
 import React, { useState } from "react"
-import { useHistory, useLocation } from "react-router"
-import { format } from "date-fns"
-import orderMenu from "../menuData/orders"
+import { subMenu } from "../menuData/menu"
 import AppBarNav from "./AppBarNav"
-import NavDrawer from "./NavDrawer"
 
 const drawerWidth = 240
 
@@ -61,18 +59,16 @@ const useStyles = makeStyles((theme) => ({
   },
   wrapper: {
     backgroundColor: "#fff"
+  },
+  navbarDisplayFlex: {
+    display: "flex",
+    justifyContent: `space-between`
   }
 }))
 
 const Layout = ({ children }) => {
   const classes = useStyles()
-  const history = useHistory()
-  const location = useLocation()
   const [expanded, setExpanded] = useState("")
-
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-
-  //   functions
   const handleExpanded = (index) => {
     if (expanded === index) {
       setExpanded("")
@@ -82,12 +78,27 @@ const Layout = ({ children }) => {
   }
 
   return (
-    // <div className={classes.root}>
     <div>
-      {/* AppBar */}
-
       <Box bgcolor="primary.main" color="white" pb={25}>
         <AppBarNav />
+        <Grid container justify="center">
+          <Grid item md={10}>
+            <Box
+              flexWrap="wrap"
+              display="flex"
+              borderTop={3}
+              borderColor="primary.light"
+            >
+              {subMenu.map(({ text, index }) => (
+                <Box display={{ xs: "none", sm: "block" }}>
+                  <ListItem button>
+                    <ListItemText primary={text} />
+                  </ListItem>
+                </Box>
+              ))}
+            </Box>
+          </Grid>
+        </Grid>
       </Box>
 
       <div className={classes.page}>
@@ -95,13 +106,6 @@ const Layout = ({ children }) => {
           <Grid item xs={11}>
             {children}
           </Grid>
-          {/* <Grid item xs={11}> */}
-          {/* <Box mt={-25} className={classes.wrapper} borderRadius={5}>
-              <Box pt={3} height="100%">
-                {children}
-              </Box>
-            </Box> */}
-          {/* </Grid> */}
         </Grid>
       </div>
     </div>

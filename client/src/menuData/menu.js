@@ -5,7 +5,7 @@ import { ShoppingBag, Users, UserPlus } from "react-feather"
 import CategoryIcon from "@material-ui/icons/Category"
 
 const sub_menu_icon_color = "#0288d1"
-const orderMenu = [
+export const mainMenu = [
   {
     text: "Orders",
     icon: <SubjectOutlined />,
@@ -82,4 +82,13 @@ const orderMenu = [
   }
 ]
 
-export default orderMenu
+export const subMenu = [
+  { text: "New Order" },
+  { text: "All Orders" },
+  { text: "Add Product" },
+  { text: "Products List" },
+  { text: "Add Customer" },
+  { text: "Customers List" },
+  { text: "Add Product" },
+  { text: "Products List" }
+]

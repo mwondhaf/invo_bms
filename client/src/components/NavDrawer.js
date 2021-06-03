@@ -9,7 +9,7 @@ import ListItem from "@material-ui/core/ListItem"
 import ListItemIcon from "@material-ui/core/ListItemIcon"
 import ListItemText from "@material-ui/core/ListItemText"
 import { Collapse, Typography } from "@material-ui/core"
-import orderMenu from "../menuData/orders"
+import { mainMenu } from "../menuData/menu"
 import { useHistory, useLocation } from "react-router"
 
 const useStyles = makeStyles((theme) => ({
@@ -54,7 +54,7 @@ export default function NavDrawer({ isDrawerOpen, toggleDrawer }) {
             </div>
             <Divider />
             <List>
-              {orderMenu.map(({ text, icon, path, options }, index) => (
+              {mainMenu.map(({ text, icon, path, options }, index) => (
                 <div key={index}>
                   <ListItem
                     button
