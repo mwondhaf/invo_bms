@@ -292,7 +292,7 @@ const Create = () => {
                           size="large"
                           style={{ marginTop: 30 }}
                         >
-                          create
+                          CONFIRM
                         </Button>
                       </Box>
                     </Grid>
