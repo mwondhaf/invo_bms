@@ -1,15 +1,6 @@
-import {
-  Box,
-  Button,
-  Grid,
-  makeStyles,
-  Modal,
-  TextField,
-  Typography
-} from "@material-ui/core"
+import { Box, Button, makeStyles, TextField } from "@material-ui/core"
 import React, { useEffect, useState } from "react"
 import TableTemplate from "../../components/TableTemplate"
-import useFetch from "../../composables/useFetch"
 import axios from "axios"
 import api_url from "../../api/api"
 
@@ -23,7 +14,6 @@ const useStyles = makeStyles((theme) => ({
 
 const Categories = () => {
   const classes = useStyles()
-  const url = "http://localhost:8000/categories"
 
   const [catData, setCatData] = useState([])
   const [openModal, setOpenModal] = useState(false)

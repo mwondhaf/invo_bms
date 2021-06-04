@@ -4,23 +4,17 @@ import React, { useEffect, useState } from "react"
 import { useHistory } from "react-router"
 import api_url from "../../api/api"
 import TableTemplate from "../../components/TableTemplate"
-import useFetch from "../../composables/useFetch"
 
 const AllProducts = () => {
   const history = useHistory()
   const [products, setProducts] = useState([])
   const [watchDelete, setWatchDelete] = useState(false)
 
-  // const { data, isPending } = useFetch("/products")
-
   useEffect(() => {
     const fetchProducts = async () => {
       axios.get(`${api_url}/products`).then((res) => setProducts(res.data))
     }
-
     fetchProducts()
-    // setProducts(data)
-    // console.log("data", data)
   }, [watchDelete])
 
   const handleDelete = async (_id) => {

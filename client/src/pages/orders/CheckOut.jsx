@@ -1,21 +1,19 @@
 import axios from "axios"
 import React, { useEffect, useState } from "react"
-import { useLocation, useParams } from "react-router"
+import { useParams } from "react-router"
 import api_url from "../../api/api"
 
 const CheckOut = () => {
-  const [orderID, setOrderID] = useState()
   const [orderDetails, setOrderDetails] = useState()
-  const location = useLocation()
   const [products, setProducts] = useState([])
   console.log(products)
 
   console.log("order", orderDetails)
 
   const params = useParams()
-  const order_id = params.id
 
   useEffect(() => {
+    const order_id = params.id
     const fetchOrderDetails = async () => {
       await axios.get(`${api_url}/orders/${order_id}`).then((res) => {
         console.log("res", res.data)
@@ -23,13 +21,14 @@ const CheckOut = () => {
         setProducts(res.data.products)
       })
     }
-
     fetchOrderDetails()
   }, [])
 
   return (
     <div>
-      <div>{orderID}</div>
+      <div>
+        <h4>Hi, this part is coming banaye :)</h4>
+      </div>
       {orderDetails && (
         <div>
           <div>

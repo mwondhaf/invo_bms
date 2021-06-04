@@ -1,21 +1,11 @@
 import {
-  AppBar,
   Box,
-  Button,
-  Collapse,
-  Container,
-  Drawer,
   Grid,
-  List,
   ListItem,
-  ListItemIcon,
   ListItemText,
-  makeStyles,
-  SwipeableDrawer,
-  Toolbar,
-  Typography
+  makeStyles
 } from "@material-ui/core"
-import React, { useState } from "react"
+import React from "react"
 import { subMenu } from "../menuData/menu"
 import AppBarNav from "./AppBarNav"
 
@@ -68,18 +58,10 @@ const useStyles = makeStyles((theme) => ({
 
 const Layout = ({ children }) => {
   const classes = useStyles()
-  const [expanded, setExpanded] = useState("")
-  const handleExpanded = (index) => {
-    if (expanded === index) {
-      setExpanded("")
-    } else {
-      setExpanded(index)
-    }
-  }
 
   return (
     <div>
-      <Box bgcolor="primary.main" color="white" pb={25}>
+      <Box bgcolor="primary.main" color="white" pb={15}>
         <AppBarNav />
         <Grid container justify="center">
           <Grid item md={10}>
@@ -90,7 +72,7 @@ const Layout = ({ children }) => {
               borderColor="primary.light"
             >
               {subMenu.map(({ text, index }) => (
-                <Box display={{ xs: "none", sm: "block" }}>
+                <Box key={index} display={{ xs: "none", sm: "block" }}>
                   <ListItem button>
                     <ListItemText primary={text} />
                   </ListItem>

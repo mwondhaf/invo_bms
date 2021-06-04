@@ -6,7 +6,6 @@ import CardContent from "@material-ui/core/CardContent"
 import Button from "@material-ui/core/Button"
 import Typography from "@material-ui/core/Typography"
 import { useHistory, useLocation } from "react-router"
-import { Link } from "react-router-dom"
 
 const useStyles = makeStyles({
   root: {
@@ -51,8 +50,6 @@ const ProductDetail = () => {
       history.push("/")
     })
   }
-
-  const bull = <span className={classes.bullet}>•</span>
 
   return (
     <div>

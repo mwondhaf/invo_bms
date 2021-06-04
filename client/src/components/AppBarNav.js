@@ -15,7 +15,7 @@ import MailIcon from "@material-ui/icons/Mail"
 import NotificationsIcon from "@material-ui/icons/Notifications"
 import MoreIcon from "@material-ui/icons/MoreVert"
 import NavDrawer from "./NavDrawer"
-import { Box, Grid } from "@material-ui/core"
+import { Grid } from "@material-ui/core"
 
 const useStyles = makeStyles((theme) => ({
   grow: {

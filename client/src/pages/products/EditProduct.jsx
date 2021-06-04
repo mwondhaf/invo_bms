@@ -1,14 +1,13 @@
 import {
   Button,
   Grid,
-  InputAdornment,
   makeStyles,
   TextField,
   Typography
 } from "@material-ui/core"
 import axios from "axios"
-import React, { useEffect, useState } from "react"
-import { useHistory, useLocation, useParams } from "react-router"
+import React, { useState } from "react"
+import { useHistory, useLocation } from "react-router"
 import api_url from "../../api/api"
 import useFetch from "../../composables/useFetch"
 
@@ -30,7 +29,7 @@ const EditProduct = () => {
   const location = useLocation()
   const path = location.pathname.split("/")[3]
 
-  const { data: product, error, isPending } = useFetch(`/products/${path}`)
+  const { data: product, isPending } = useFetch(`${api_url}/products/${path}`)
 
   const [productName, setProductName] = useState(product.productName)
   const [category, setCategory] = useState(product.category)
