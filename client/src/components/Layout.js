@@ -13,9 +13,10 @@ const drawerWidth = 240
 
 const useStyles = makeStyles((theme) => ({
   page: {
-    background: "#F7FCFC",
+    // background: "#F7FCFC",
     width: "100%",
-    paddingTop: theme.spacing(2)
+    paddingTop: theme.spacing(2),
+    minHeight: "50vh"
   },
   drawer: {
     width: drawerWidth
@@ -53,6 +54,9 @@ const useStyles = makeStyles((theme) => ({
   navbarDisplayFlex: {
     display: "flex",
     justifyContent: `space-between`
+  },
+  listItemText: {
+    fontSize: "0.7em" //Insert your required size
   }
 }))
 
@@ -74,7 +78,10 @@ const Layout = ({ children }) => {
               {subMenu.map(({ text, index }) => (
                 <Box key={index} display={{ xs: "none", sm: "block" }}>
                   <ListItem button>
-                    <ListItemText primary={text} />
+                    <ListItemText
+                      primary={text}
+                      classes={{ primary: classes.listItemText }}
+                    />
                   </ListItem>
                 </Box>
               ))}

@@ -54,6 +54,15 @@ export const mainMenu = [
         )
       },
       {
+        text: "Product Grid",
+        path: "/grid",
+        icon: (
+          <LibraryBooksIcon
+            style={{ color: sub_menu_icon_color, fontSize: "small" }}
+          />
+        )
+      },
+      {
         text: "Categories",
         path: "/product/categories",
         icon: (
