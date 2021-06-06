@@ -8,7 +8,9 @@ import {
   Grid,
   Hidden,
   makeStyles,
+  MenuItem,
   Paper,
+  Select,
   TextField,
   Typography
 } from "@material-ui/core"
@@ -20,8 +22,11 @@ import NavigationIcon from "@material-ui/icons/Navigation"
 import DeleteSweepIcon from "@material-ui/icons/DeleteSweep"
 import HourglassEmptyIcon from "@material-ui/icons/HourglassEmpty"
 import axios from "axios"
+import NumberFormat from "react-number-format"
 import api_url from "../../api/api"
 import { CartContext } from "../../context/CartContext"
+import { SignalCellularNullTwoTone } from "@material-ui/icons"
+import { payment_methods } from "../../menuData/paymentMethods"
 
 const useStyles = makeStyles((theme) => ({
   field: {
@@ -79,12 +84,16 @@ const Create = () => {
   const [productFieldError, setProductFieldError] = useState("")
   const [selectedCustomer, setSelectedCustomer] = useState(null)
   const [productPicker, setProductPicker] = useState(true)
-
+  const [amountPaid, setAmountPaid] = useState(0)
+  const [paymentMethod, setPaymentMethod] = useState(1)
   const history = useHistory()
   const { data: customers } = useFetch(`${api_url}/customers`)
   const { data: products } = useFetch(`${api_url}/products`)
 
+  // const order_pay_price_excess_notify = () => toast(`That's excess pay!..`)
+
   console.log("cart", cart)
+  console.log(paymentMethod)
 
   const totalPrice = cart.reduce(
     (acc, current) => acc + current.sale_price * current.quantity_ordered,
@@ -97,6 +106,7 @@ const Create = () => {
   )
   useEffect(() => {
     setCartTotal(totalPrice)
+    setAmountPaid(totalPrice)
   }, [cart])
 
   const setSalesPrice = (e, product) => {
@@ -117,6 +127,7 @@ const Create = () => {
             : item
         )
       )
+      setProductPicker(!productPicker)
     }
   }
 
@@ -134,6 +145,7 @@ const Create = () => {
             : item
         )
       )
+      setProductPicker(!productPicker)
     }
   }
 
@@ -373,6 +385,7 @@ const Create = () => {
                           <Grid item xs={6} md={2}>
                             <TextField
                               size="small"
+                              type="number"
                               label="Selling / Unit"
                               className={classes.field}
                               variant="outlined"
@@ -482,22 +495,24 @@ const Create = () => {
                     <Box display="flex" justifyContent="flex-end">
                       <Grid item xs={12} md={6}>
                         <Card>
-                          <Box display="flex">
-                            <Box p={1} flexGrow={1}>
-                              <Typography className={classes.total_font}>
-                                Discount:
-                              </Typography>
-                            </Box>
-                            <Box p={1}>
-                              {totalDiscount >= 0 && (
+                          {totalDiscount > 0 && (
+                            <Box display="flex">
+                              <Box p={1} flexGrow={1}>
                                 <Typography className={classes.total_font}>
-                                  {totalDiscount.toLocaleString(undefined, {
-                                    maximumFractionDigits: 2
-                                  })}
+                                  Discount:
                                 </Typography>
-                              )}
+                              </Box>
+                              <Box p={1}>
+                                {totalDiscount >= 0 && (
+                                  <Typography className={classes.total_font}>
+                                    {totalDiscount.toLocaleString(undefined, {
+                                      maximumFractionDigits: 2
+                                    })}
+                                  </Typography>
+                                )}
+                              </Box>
                             </Box>
-                          </Box>
+                          )}
                           <Box display="flex">
                             <Box p={1} flexGrow={1}>
                               <Typography className={classes.total_font}>
@@ -515,6 +530,7 @@ const Create = () => {
                               </Typography>
                             </Box>
                           </Box>
+
                           <Box display="flex">
                             <Box p={1} flexGrow={1}>
                               <Typography className={classes.total_font}>
@@ -529,6 +545,85 @@ const Create = () => {
                               </Typography>
                             </Box>
                           </Box>
+                          <Box display="flex">
+                            <Box p={1} flexGrow={1}>
+                              <Typography className={classes.total_font}>
+                                Amount Paid:
+                              </Typography>
+                            </Box>
+                            <Box p={1}>
+                              <NumberFormat
+                                key={productPicker}
+                                helperText="hi"
+                                style={{
+                                  fontWeight: "900",
+                                  // border: 0,
+                                  fontSize: "16px",
+                                  textAlign: "center",
+                                  borderWidth: "0 0 2px",
+                                  color: "green",
+                                  borderColor: "f9f9f9",
+                                  padding: 5
+                                }}
+                                onValueChange={(values) =>
+                                  setAmountPaid(values.floatValue)
+                                }
+                                onChange={(e) => {
+                                  e.persist()
+                                  e.target = { amountPaid }
+                                }}
+                                defaultValue={totalPrice}
+                                displayType={"number"}
+                                thousandSeparator={true}
+                                prefix={"Ugx "}
+                              />
+                            </Box>
+                          </Box>
+
+                          {amountPaid < totalPrice ? (
+                            <Box display="flex">
+                              <Box p={1} flexGrow={1}>
+                                <Typography className={classes.total_font}>
+                                  Balance:
+                                </Typography>
+                              </Box>
+                              <Box p={1}>
+                                <Typography
+                                  style={{
+                                    fontWeight: "700",
+                                    color: "orange",
+                                    fontSize: 14
+                                  }}
+                                >
+                                  {(totalPrice - amountPaid).toLocaleString(
+                                    undefined,
+                                    {
+                                      maximumFractionDigits: 2
+                                    }
+                                  )}
+                                </Typography>
+                              </Box>
+                            </Box>
+                          ) : null}
+                          <Box>
+                            <Box p={1}>
+                              <Select
+                                defaultValue={"Cash"}
+                                size="small"
+                                variant="outlined"
+                                fullWidth
+                                onChange={(e) =>
+                                  setPaymentMethod(e.target.value)
+                                }
+                              >
+                                <MenuItem value={"Cash"}>Cash</MenuItem>
+                                <MenuItem value={"Mobile Money"}>
+                                  Mobile Money
+                                </MenuItem>
+                              </Select>
+                            </Box>
+                          </Box>
+
                           <Box p={1} display="flex">
                             <Box flexGrow={1} p={1}>
                               <Button
@@ -537,6 +632,9 @@ const Create = () => {
                                 color="primary"
                                 size="large"
                                 fullWidth
+                                disabled={
+                                  amountPaid > totalPrice ? true : false
+                                }
                                 onClick={handleSubmit}
                               >
                                 Create Order
@@ -544,7 +642,10 @@ const Create = () => {
                             </Box>
                             <Box p={1}>
                               <Button
-                                onClick={() => setCart([])}
+                                onClick={() => {
+                                  setCart([])
+                                  setProductFieldError("")
+                                }}
                                 size="large"
                                 variant="outlined"
                                 color="secondary"
