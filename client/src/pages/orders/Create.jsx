@@ -228,11 +228,8 @@ const Create = () => {
       order.real_total = totalDiscount + amountPaid
 
       try {
-        await axios.post("http://localhost:9000/orders", order).then((res) => {
-          // await axios.post(`${api_url}/orders`, order).then((res) => {
-          console.log(res.data)
-          // localStorage.setItem("order", res.data.order_id)
-          // history.push(`/checkout/${res.data.order_id}`)
+        await axios.post(`${api_url}/orders`, order).then((res) => {
+          history.push(`/checkout/${res.data.order_id}`)
         })
       } catch (error) {
         console.log(error)
