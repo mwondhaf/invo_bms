@@ -5,8 +5,10 @@ import {
   CardContent,
   Divider,
   Fab,
+  FormControl,
   Grid,
   Hidden,
+  InputLabel,
   makeStyles,
   MenuItem,
   Paper,
@@ -73,6 +75,10 @@ const useStyles = makeStyles((theme) => ({
     color: "#f7f7f7",
     fontSize: 14,
     fontWeight: "900"
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 220
   }
 }))
 
@@ -85,15 +91,12 @@ const Create = () => {
   const [selectedCustomer, setSelectedCustomer] = useState(null)
   const [productPicker, setProductPicker] = useState(true)
   const [amountPaid, setAmountPaid] = useState(0)
-  const [paymentMethod, setPaymentMethod] = useState(1)
+  const [paymentMethod, setPaymentMethod] = useState("Cash")
   const history = useHistory()
   const { data: customers } = useFetch(`${api_url}/customers`)
   const { data: products } = useFetch(`${api_url}/products`)
 
   // const order_pay_price_excess_notify = () => toast(`That's excess pay!..`)
-
-  console.log("cart", cart)
-  console.log(paymentMethod)
 
   const totalPrice = cart.reduce(
     (acc, current) => acc + current.sale_price * current.quantity_ordered,
@@ -192,6 +195,12 @@ const Create = () => {
         products: cart
       }
 
+      // payment method
+      order.payment_method = paymentMethod
+
+      // discount
+      order.total_discount = totalDiscount
+
       // product prices
       const prices = []
       order.products.map((product) => {
@@ -205,11 +214,25 @@ const Create = () => {
       order.total_price = prices_sum
       setCartTotal(prices_sum)
 
+      // total paid
+      order.total_paid = amountPaid
+
+      // total balance
+      if (amountPaid < prices_sum) {
+        order.total_balance = prices_sum - amountPaid
+      } else {
+        order.total_balance = 0
+      }
+
+      // real total before discount
+      order.real_total = totalDiscount + amountPaid
+
       try {
-        await axios.post(`${api_url}/orders`, order).then((res) => {
-          console.log(res)
-          localStorage.setItem("order", res.data.order_id)
-          history.push(`/checkout/${res.data.order_id}`)
+        await axios.post("http://localhost:9000/orders", order).then((res) => {
+          // await axios.post(`${api_url}/orders`, order).then((res) => {
+          console.log(res.data)
+          // localStorage.setItem("order", res.data.order_id)
+          // history.push(`/checkout/${res.data.order_id}`)
         })
       } catch (error) {
         console.log(error)
@@ -560,7 +583,7 @@ const Create = () => {
                                   // border: 0,
                                   fontSize: "16px",
                                   textAlign: "center",
-                                  borderWidth: "0 0 2px",
+                                  borderWidth: "0 0 1px",
                                   color: "green",
                                   borderColor: "f9f9f9",
                                   padding: 5
@@ -605,22 +628,37 @@ const Create = () => {
                               </Box>
                             </Box>
                           ) : null}
-                          <Box>
+                          <Box display="flex">
+                            <Box flexGrow={1} p={1}>
+                              <Typography className={classes.total_font}>
+                                Payment Method:
+                              </Typography>
+                            </Box>
                             <Box p={1}>
-                              <Select
-                                defaultValue={"Cash"}
-                                size="small"
-                                variant="outlined"
-                                fullWidth
-                                onChange={(e) =>
-                                  setPaymentMethod(e.target.value)
-                                }
-                              >
-                                <MenuItem value={"Cash"}>Cash</MenuItem>
-                                <MenuItem value={"Mobile Money"}>
-                                  Mobile Money
-                                </MenuItem>
-                              </Select>
+                              <FormControl className={classes.formControl}>
+                                {/* <InputLabel>Payment Method</InputLabel> */}
+                                <Select
+                                  defaultValue={"Cash"}
+                                  size="small"
+                                  // variant="outlined"
+                                  fullWidth
+                                  onChange={(e) =>
+                                    setPaymentMethod(e.target.value)
+                                  }
+                                >
+                                  <MenuItem value={"Cash"}>Cash</MenuItem>
+                                  <MenuItem value={"Mobile Money"}>
+                                    Mobile Money
+                                  </MenuItem>
+                                  <MenuItem value={"Cheque"}>Cheque</MenuItem>
+                                  <MenuItem value={"Bank Deposit"}>
+                                    Bank Deposit
+                                  </MenuItem>
+                                  <MenuItem value={"Bank Transfer"}>
+                                    Bank Transfer
+                                  </MenuItem>
+                                </Select>
+                              </FormControl>
                             </Box>
                           </Box>
 

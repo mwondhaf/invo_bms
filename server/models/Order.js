@@ -14,11 +14,31 @@ const OrderSchema = new mongoose.Schema(
       type: String,
       required: false
     },
+    payment_method: {
+      type: String,
+      required: true
+    },
     products: {
       type: Array,
       required: true
     },
     total_price: {
+      type: Number,
+      required: true
+    },
+    total_paid: {
+      type: Number,
+      required: true
+    },
+    total_discount: {
+      type: Number,
+      required: true
+    },
+    total_balance: {
+      type: Number,
+      required: true
+    },
+    real_total: {
       type: Number,
       required: true
     },
