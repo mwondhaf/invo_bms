@@ -14,12 +14,17 @@ const CheckOut = () => {
 
   useEffect(() => {
     const order_id = params.id
+
     const fetchOrderDetails = async () => {
-      await axios.get(`${api_url}/orders/${order_id}`).then((res) => {
-        console.log("res", res.data)
-        setOrderDetails(res.data)
-        setProducts(res.data.products)
-      })
+      try {
+        await axios.get(`${api_url}/orders/${order_id}`).then((res) => {
+          console.log("res", res.data)
+          setOrderDetails(res.data)
+          setProducts(res.data.products)
+        })
+      } catch (error) {
+        console.log(error)
+      }
     }
     fetchOrderDetails()
   }, [])

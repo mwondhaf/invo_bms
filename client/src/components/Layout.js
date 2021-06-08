@@ -13,7 +13,7 @@ const drawerWidth = 240
 
 const useStyles = makeStyles((theme) => ({
   page: {
-    // background: "#F7FCFC",
+    background: "#F7FCFC",
     width: "100%",
     paddingTop: theme.spacing(2),
     minHeight: "50vh"
@@ -65,7 +65,7 @@ const Layout = ({ children }) => {
 
   return (
     <div>
-      <Box bgcolor="primary.main" color="white" pb={15}>
+      <Box bgcolor="primary.main" color="white">
         <AppBarNav />
         <Grid container justify="center">
           <Grid item md={10}>

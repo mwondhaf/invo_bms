@@ -40,6 +40,9 @@ function App() {
         <Router>
           <Layout>
             <Switch>
+              <Route exact path="/checkout/:id">
+                <CheckOut />
+              </Route>
               <Route exact path="/">
                 <Home />
               </Route>
@@ -52,7 +55,6 @@ function App() {
               <Route exact path="/products">
                 <AllProducts />
               </Route>
-
               <Route exact path="/addproduct">
                 <AddProduct />
               </Route>
@@ -71,9 +73,7 @@ function App() {
               <Route exact path="/customers">
                 <CustomerList />
               </Route>
-              <Route exact path="/checkout/:id">
-                <CheckOut />
-              </Route>
+
               <Route exact path="/grid">
                 <ProductsGrid />
               </Route>

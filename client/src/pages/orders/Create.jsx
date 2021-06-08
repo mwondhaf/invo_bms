@@ -90,8 +90,10 @@ const Create = () => {
   const [productFieldError, setProductFieldError] = useState("")
   const [selectedCustomer, setSelectedCustomer] = useState(null)
   const [productPicker, setProductPicker] = useState(true)
-  const [amountPaid, setAmountPaid] = useState(0)
+  const [amountPaid, setAmountPaid] = useState(null)
   const [paymentMethod, setPaymentMethod] = useState("Cash")
+  const [paymentStatus, setPaymentStatus] = useState("Paid")
+  const [createOrder, setCreateOrder] = useState(false)
   const history = useHistory()
   const { data: customers } = useFetch(`${api_url}/customers`)
   const { data: products } = useFetch(`${api_url}/products`)
@@ -186,7 +188,7 @@ const Create = () => {
     e.preventDefault()
     setCustomerFieldError(false)
 
-    if (selectedCustomer && cart.length > 0) {
+    if (selectedCustomer && cart.length > 0 && amountPaid !== undefined) {
       // order
       const order = {
         customer_name: selectedCustomer.name,
@@ -218,18 +220,42 @@ const Create = () => {
       order.total_paid = amountPaid
 
       // total balance
-      if (amountPaid < prices_sum) {
+      if (amountPaid === 0) {
+        console.log("not paid")
+        order.total_balance = prices_sum
+        setPaymentStatus("Not Paid")
+        // console.log(paymentStatus)
+      } else if (amountPaid < prices_sum) {
+        console.log("parital")
         order.total_balance = prices_sum - amountPaid
+        setPaymentStatus("Partial")
+        // console.log(paymentStatus)
       } else {
+        console.log("paid")
         order.total_balance = 0
+        setPaymentStatus("Paid")
+        // console.log(paymentStatus)
       }
-
+      // {
+      //   amountPaid === 0
+      //     ? (function () {
+      //         console.log("hi")
+      //       },
+      //       console.log("not paid"))
+      //     : amountPaid < prices_sum
+      //     ? console.log("partial")
+      //     : console.log("paid")
+      // }
       // real total before discount
-      order.real_total = totalDiscount + amountPaid
+      order.real_total = totalDiscount + totalPrice
 
+      // payment status
+      order.payment_status = paymentStatus
+      // `${api_url}/orders`
       try {
-        await axios.post(`${api_url}/orders`, order).then((res) => {
-          history.push(`/checkout/${res.data.order_id}`)
+        await axios.post("http://localhost:9000/orders", order).then((res) => {
+          // history.push(`/checkout/${res.data.order_id}`)
+          console.log(res.data)
         })
       } catch (error) {
         console.log(error)
@@ -242,29 +268,30 @@ const Create = () => {
   return (
     <>
       <Grid item xs={12} md={"none"}>
-        <Box mt={-15}>
+        <Typography
+          variant="h5"
+          style={{
+            fontWeight: "900",
+            color: "#2E3C42",
+            // textAlign: "left",
+            paddingBottom: "10px",
+            paddingLeft: 10
+          }}
+        >
+          Create Order
+        </Typography>
+        <Card elevation={0}>
           <Grid container>
             <Grid item xs={12} md={4} pb={1}>
               <Card classes={{ root: classes.select_card }}>
                 <CardContent>
                   <Typography
-                    variant="h5"
-                    style={{
-                      fontWeight: "900",
-                      color: "#2E3C42",
-                      textAlign: "center",
-                      paddingBottom: "10px"
-                    }}
-                  >
-                    Create Order
-                  </Typography>
-                  <Typography
                     variant="body1"
                     style={{
                       color: "#434546",
                       paddingBottom: "10px",
-                      fontWeight: "300",
-                      textAlign: "center"
+                      fontWeight: "300"
+                      // textAlign: "center"
                     }}
                   >
                     Select a customer and products and then make an order.
@@ -670,9 +697,12 @@ const Create = () => {
                                 disabled={
                                   amountPaid > totalPrice ? true : false
                                 }
-                                onClick={handleSubmit}
+                                onClick={(e) => {
+                                  handleSubmit(e)
+                                  setCreateOrder(!createOrder)
+                                }}
                               >
-                                Create Order
+                                {createOrder ? "Creating" : "Create Order"}
                               </Button>
                             </Box>
                             <Box p={1}>
@@ -696,7 +726,7 @@ const Create = () => {
               </Card>
             </Grid>
           </Grid>
-        </Box>
+        </Card>
       </Grid>
       {/* <Grid container>
         <Grid item xs={12} md={3}>

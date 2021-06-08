@@ -20,13 +20,19 @@
           "quantity_ordered": 1
         }
       ],
+      "payment_method": "Cash",
+      "total_discount": 0,
       "total_price": 700,
+      "total_paid": 0,
+      "total_balance": 700,
+      "real_total": 0,
+      "payment_status": "Paid",
       "id": 1
     },
     {
-      "customer_name": "Suzie Casha",
-      "customer_phone": 786313557,
-      "customer_address": "Lweza",
+      "customer_name": "Frank Mwondha",
+      "customer_phone": 554259201,
+      "customer_address": "Dubai",
       "products": [
         {
           "price": 700,
@@ -43,13 +49,19 @@
           "quantity_ordered": 1
         }
       ],
+      "payment_method": "Cash",
+      "total_discount": 0,
       "total_price": 700,
+      "total_paid": 0,
+      "total_balance": 700,
+      "real_total": 0,
+      "payment_status": "Not Paid",
       "id": 2
     },
     {
-      "customer_name": "Suzie Casha",
-      "customer_phone": 786313557,
-      "customer_address": "Lweza",
+      "customer_name": "Frank Mwondha",
+      "customer_phone": 554259201,
+      "customer_address": "Dubai",
       "products": [
         {
           "price": 700,
@@ -66,15 +78,19 @@
           "quantity_ordered": 1
         }
       ],
+      "payment_method": "Cash",
+      "total_discount": 0,
       "total_price": 700,
-      "total_paid": 600,
-      "total_balance": 100,
+      "total_paid": 0,
+      "total_balance": 700,
+      "real_total": 0,
+      "payment_status": "Not Paid",
       "id": 3
     },
     {
-      "customer_name": "Suzie Casha",
-      "customer_phone": 786313557,
-      "customer_address": "Lweza",
+      "customer_name": "Frank Mwondha",
+      "customer_phone": 554259201,
+      "customer_address": "Dubai",
       "products": [
         {
           "price": 700,
@@ -91,40 +107,48 @@
           "quantity_ordered": 1
         }
       ],
+      "payment_method": "Cash",
+      "total_discount": 0,
       "total_price": 700,
-      "total_paid": 700,
-      "total_balance": 0,
+      "total_paid": 50,
+      "total_balance": 650,
+      "real_total": 50,
+      "payment_status": "Not Paid",
       "id": 4
     },
     {
-      "customer_name": "Suzie Casha",
-      "customer_phone": 786313557,
-      "customer_address": "Lweza",
+      "customer_name": "Frank Mwondha",
+      "customer_phone": 554259201,
+      "customer_address": "Dubai",
       "products": [
         {
-          "price": 40000,
-          "_id": "60b772a4134e95001566352f",
-          "productName": "Ggtth",
-          "category": "Hoes",
-          "quantity": 11,
-          "sale_price": 40000,
-          "cost": 44858,
-          "brand": "Sst",
-          "createdAt": "2021-06-02T11:59:32.986Z",
-          "updatedAt": "2021-06-02T11:59:32.986Z",
+          "price": 700,
+          "_id": "60b69b3b1d9b21001596efa8",
+          "productName": "Sheets",
+          "category": "Soft",
+          "quantity": 1000,
+          "sale_price": 700,
+          "cost": 500,
+          "brand": "Duos",
+          "createdAt": "2021-06-01T20:40:27.169Z",
+          "updatedAt": "2021-06-01T20:40:27.169Z",
           "__v": 0,
           "quantity_ordered": 1
         }
       ],
-      "total_price": 40000,
-      "total_paid": 4000,
-      "total_balance": 36000,
+      "payment_method": "Cash",
+      "total_discount": 0,
+      "total_price": 700,
+      "total_paid": 0,
+      "total_balance": 700,
+      "real_total": 700,
+      "payment_status": "Partial",
       "id": 5
     },
     {
-      "customer_name": "Suzie Casha",
-      "customer_phone": 786313557,
-      "customer_address": "Lweza",
+      "customer_name": "Frank Mwondha",
+      "customer_phone": 554259201,
+      "customer_address": "Dubai",
       "products": [
         {
           "price": 700,
@@ -132,105 +156,54 @@
           "productName": "Sheets",
           "category": "Soft",
           "quantity": 1000,
-          "sale_price": 700,
+          "sale_price": 70,
           "cost": 500,
           "brand": "Duos",
           "createdAt": "2021-06-01T20:40:27.169Z",
           "updatedAt": "2021-06-01T20:40:27.169Z",
           "__v": 0,
-          "quantity_ordered": 1
+          "quantity_ordered": 1,
+          "old_price": 700
         }
       ],
-      "payment_method": "Cheque",
-      "total_price": 700,
-      "total_paid": 700,
-      "total_balance": 0,
+      "payment_method": "Cash",
+      "total_discount": 630,
+      "total_price": 70,
+      "total_paid": 0,
+      "total_balance": 70,
+      "real_total": 700,
+      "payment_status": "Not Paid",
       "id": 6
     },
     {
-      "customer_name": "Suzie Casha",
-      "customer_phone": 786313557,
-      "customer_address": "Lweza",
+      "customer_name": "Frank Mwondha",
+      "customer_phone": 554259201,
+      "customer_address": "Dubai",
       "products": [
-        {
-          "price": 40000,
-          "_id": "60b772a4134e95001566352f",
-          "productName": "Ggtth",
-          "category": "Hoes",
-          "quantity": 11,
-          "sale_price": 4000,
-          "cost": 44858,
-          "brand": "Sst",
-          "createdAt": "2021-06-02T11:59:32.986Z",
-          "updatedAt": "2021-06-02T11:59:32.986Z",
-          "__v": 0,
-          "quantity_ordered": 1,
-          "old_price": 40000
-        },
         {
           "price": 700,
           "_id": "60b69b3b1d9b21001596efa8",
           "productName": "Sheets",
           "category": "Soft",
           "quantity": 1000,
-          "sale_price": 700,
+          "sale_price": 70,
           "cost": 500,
           "brand": "Duos",
           "createdAt": "2021-06-01T20:40:27.169Z",
           "updatedAt": "2021-06-01T20:40:27.169Z",
           "__v": 0,
-          "quantity_ordered": 7
+          "quantity_ordered": 1,
+          "old_price": 700
         }
       ],
-      "payment_method": "Cheque",
-      "total_discount": 36000,
-      "total_price": 8900,
-      "total_paid": 8900,
-      "total_balance": 0,
+      "payment_method": "Cash",
+      "total_discount": 630,
+      "total_price": 70,
+      "total_paid": 12,
+      "total_balance": 58,
+      "real_total": 700,
+      "payment_status": "Not Paid",
       "id": 7
-    },
-    {
-      "customer_name": "Suzie Casha",
-      "customer_phone": 786313557,
-      "customer_address": "Lweza",
-      "products": [
-        {
-          "price": 40000,
-          "_id": "60b772a4134e95001566352f",
-          "productName": "Ggtth",
-          "category": "Hoes",
-          "quantity": 11,
-          "sale_price": 4000,
-          "cost": 44858,
-          "brand": "Sst",
-          "createdAt": "2021-06-02T11:59:32.986Z",
-          "updatedAt": "2021-06-02T11:59:32.986Z",
-          "__v": 0,
-          "quantity_ordered": 1,
-          "old_price": 40000
-        },
-        {
-          "price": 700,
-          "_id": "60b69b3b1d9b21001596efa8",
-          "productName": "Sheets",
-          "category": "Soft",
-          "quantity": 1000,
-          "sale_price": 700,
-          "cost": 500,
-          "brand": "Duos",
-          "createdAt": "2021-06-01T20:40:27.169Z",
-          "updatedAt": "2021-06-01T20:40:27.169Z",
-          "__v": 0,
-          "quantity_ordered": 7
-        }
-      ],
-      "payment_method": "Cheque",
-      "total_discount": 36000,
-      "total_price": 8900,
-      "total_paid": 8900,
-      "total_balance": 0,
-      "real_total": 44900,
-      "id": 8
     }
   ],
   "customers": [
