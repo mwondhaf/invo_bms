@@ -32,11 +32,11 @@ export const getOrders = async (req, res) => {
   try {
     let orders
     if (order_id) {
-      orders = await Order.findOne({ order_id: req.params.id })
+      orders = await Order.find({ order_id })
       res.status(200).json(orders)
     } else {
-      res.status(200).json(orders)
       orders = await Order.find()
+      res.status(200).json(orders)
     }
   } catch (error) {
     res.status(404).json({ message: error.message })

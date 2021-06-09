@@ -55,17 +55,20 @@ const Orders = () => {
   const classes = useStyles()
 
   const [orders, setOrders] = useState([])
-  console.log(orders)
+  const [searchQuery, setSearchQuery] = useState("")
+  console.log(searchQuery)
 
   useEffect(() => {
-    const fetchOrders = async () => {
-      await axios.get(`${api_url}/orders`).then((res) => {
+    fetchOrders()
+  }, [searchQuery])
+
+  const fetchOrders = async () => {
+    await axios
+      .get(`${api_url}/orders`, { params: { id: searchQuery } })
+      .then((res) => {
         setOrders(res.data)
       })
-    }
-    fetchOrders()
-  }, [])
-
+  }
   // moment().format('MMMM Do YYYY, h:mm:ss a')
   const columns = [
     // { field: "_id", headerName: "ID", width: 70 },
@@ -143,13 +146,16 @@ const Orders = () => {
                     disableElevation
                   >
                     <InputBase
+                      onBlur={(e) => {
+                        setSearchQuery(e.target.value)
+                        console.log("search")
+                      }}
                       filled
                       className={classes.input}
                       placeholder="Search orders"
                       inputProps={{ "aria-label": "search orders" }}
                     />
                     <IconButton
-                      type="submit"
                       className={classes.iconButton}
                       aria-label="search"
                     >
