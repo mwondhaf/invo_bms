@@ -29,7 +29,11 @@ import InfoIcon from "@material-ui/icons/Info"
 import DirectionsIcon from "@material-ui/icons/Directions"
 import { green, orange, red } from "@material-ui/core/colors"
 import { AccountCircle } from "@material-ui/icons"
-
+import Alert from "@material-ui/lab/Alert"
+import HdrWeakIcon from "@material-ui/icons/HdrWeak"
+import TripOriginIcon from "@material-ui/icons/TripOrigin"
+import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline"
+import { Link } from "react-router-dom"
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: "2px 4px",
@@ -55,39 +59,48 @@ const Orders = () => {
   const classes = useStyles()
 
   const [orders, setOrders] = useState([])
-  const [searchQuery, setSearchQuery] = useState("")
-  console.log(searchQuery)
+  const [searchError, setSearchError] = useState(false)
+  const [query, setQuery] = useState("")
 
   useEffect(() => {
     fetchOrders()
-  }, [searchQuery])
+  }, [])
 
   const fetchOrders = async () => {
-    await axios
-      .get(`${api_url}/orders`, { params: { id: searchQuery } })
-      .then((res) => {
-        setOrders(res.data)
-      })
+    await axios.get(`${api_url}/orders`).then((res) => {
+      setOrders(res.data)
+    })
+  }
+
+  const handleSearch = (e) => {
+    e.preventDefault()
+    setSearchError(!searchError)
+
+    const query = e.target.value.trim()
+
+    if (query) {
+      const result = orders.filter((order) => order.order_id === query)
+      if (result.length > 0) {
+        setOrders(result)
+      } else {
+        setSearchError(!searchError)
+        fetchOrders()
+      }
+    }
   }
   // moment().format('MMMM Do YYYY, h:mm:ss a')
   const columns = [
     // { field: "_id", headerName: "ID", width: 70 },
-    { field: "order_id", headerName: "ORDER", width: 130 },
     {
-      field: "createdAt",
-      headerName: "DATE",
-      width: 140,
-      type: "date",
-      renderCell: (params) => {
-        return moment(params.formattedValue).format("MMMM Do YYYY, h:mm")
-      }
+      field: "order_id",
+      headerName: "ORDER",
+      width: 130
     },
     {
       field: "payment_status",
       headerName: "Status",
-      flex: 1,
+      width: 120,
       renderCell: (params) => {
-        console.log(params)
         return (
           <div>
             <Button
@@ -109,19 +122,47 @@ const Orders = () => {
       }
     },
     {
+      field: "createdAt",
+      headerName: "DATE",
+      width: 150,
+      type: "date",
+      renderCell: (params) => {
+        return moment(params.formattedValue).format("MMMM Do YYYY, h:mm")
+      }
+    },
+
+    {
       field: "total_paid",
       headerName: "Paid",
-      flex: 0.5
+      width: 130
     },
     {
       field: "total_balance",
       headerName: "Balance",
-      flex: 0.5
+      width: 130
+    },
+    {
+      field: "action",
+      headerName: "Actions",
+      flex: 0.5,
+      renderCell: (params) => {
+        return <DeleteOutlineIcon onClick={() => console.log("jj")} />
+      }
     }
   ]
 
   return (
     <>
+      {searchError && (
+        <Alert
+          severity="warning"
+          onClose={() => {
+            setSearchError(!searchError)
+          }}
+        >
+          {`Order not found - check the ID well!`}
+        </Alert>
+      )}
       <Grid item xs={12}>
         <Typography
           variant="h5"
@@ -146,11 +187,10 @@ const Orders = () => {
                     disableElevation
                   >
                     <InputBase
-                      onBlur={(e) => {
-                        setSearchQuery(e.target.value)
-                        console.log("search")
+                      onChange={(e) => {
+                        handleSearch(e)
                       }}
-                      filled
+                      type="number"
                       className={classes.input}
                       placeholder="Search orders"
                       inputProps={{ "aria-label": "search orders" }}
@@ -165,12 +205,13 @@ const Orders = () => {
                 </Grid>
               </Box>
             </Grid>
-            <div style={{ height: 400, width: "100%" }}>
+            <div style={{ height: 450, width: "100%" }}>
               <DataGrid
                 getRowId={(row) => row._id}
                 rows={orders}
                 columns={columns}
-                autoPageSize={true}
+                // autoPageSize={true}
+                pageSize={6}
                 checkboxSelection
                 sortModel={[{ field: "createdAt", sort: "desc" }]}
               />
