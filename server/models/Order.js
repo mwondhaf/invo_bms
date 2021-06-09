@@ -18,6 +18,10 @@ const OrderSchema = new mongoose.Schema(
       type: String,
       required: true
     },
+    payment_status: {
+      type: String,
+      required: true
+    },
     products: {
       type: Array,
       required: true

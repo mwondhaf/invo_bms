@@ -13,7 +13,7 @@ export const createOrder = async (req, res) => {
   }
 }
 
-// get single Order bu prder id
+// get single Order bu order id
 export const getOrder = async (req, res) => {
   try {
     const order = await Order.findOne({ order_id: req.params.id })
@@ -23,18 +23,43 @@ export const getOrder = async (req, res) => {
   }
 }
 
+// get order searched
+
 // get all orders
 export const getOrders = async (req, res) => {
-  console.log("====================================")
-  console.log("get orders")
-  console.log("====================================")
+  const order_id = req.query.id
+
   try {
-    const orders = await Order.find()
-    res.status(200).json(orders)
+    let orders
+    if (order_id) {
+      orders = await Order.findOne({ order_id: req.params.id })
+      res.status(200).json(orders)
+    } else {
+      res.status(200).json(orders)
+      orders = await Order.find()
+    }
   } catch (error) {
     res.status(404).json({ message: error.message })
   }
 }
+
+// const username = req.query.user
+// const catName = req.query.cat
+
+// try {
+//   let posts
+//   if (username) {
+//     posts = await Post.find({ username })
+//   } else if (catName) {
+//     posts = await Post.find({ categories: { $in: [catName] } })
+//   } else {
+//     posts = await Post.find()
+//     // res.status(404).json({ message: "Cant find" })
+//   }
+//   res.status(200).json(posts)
+// } catch (error) {
+//   res.status(404).json({ message: error.message })
+// }
 
 // delete product
 // export const deleteProduct = async (req, res) => {

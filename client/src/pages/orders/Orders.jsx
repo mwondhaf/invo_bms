@@ -1,10 +1,13 @@
 import {
   Box,
+  Button,
   Card,
   CardContent,
   Container,
   Divider,
   Grid,
+  Input,
+  InputAdornment,
   InputBase,
   makeStyles,
   Paper,
@@ -16,9 +19,16 @@ import axios from "axios"
 import moment from "moment"
 import api_url from "../../api/api"
 import IconButton from "@material-ui/core/IconButton"
+import DoneIcon from "@material-ui/icons/Done"
+import MailIcon from "@material-ui/icons/Mail"
+import CachedIcon from "@material-ui/icons/Cached"
+import Badge from "@material-ui/core/Badge"
 import MenuIcon from "@material-ui/icons/Menu"
 import SearchIcon from "@material-ui/icons/Search"
+import InfoIcon from "@material-ui/icons/Info"
 import DirectionsIcon from "@material-ui/icons/Directions"
+import { green, orange, red } from "@material-ui/core/colors"
+import { AccountCircle } from "@material-ui/icons"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -72,11 +82,37 @@ const Orders = () => {
     {
       field: "payment_status",
       headerName: "Status",
-      flex: 1
+      flex: 1,
+      renderCell: (params) => {
+        console.log(params)
+        return (
+          <div>
+            <Button
+              startIcon={
+                params.formattedValue === "Paid" ? (
+                  <DoneIcon style={{ color: green[500] }} />
+                ) : params.formattedValue === "Partial" ? (
+                  <CachedIcon style={{ color: orange[500] }} />
+                ) : params.formattedValue === "Not Paid" ? (
+                  <InfoIcon style={{ color: red[500] }} />
+                ) : null
+              }
+              size="small"
+            >
+              {params.formattedValue}
+            </Button>
+          </div>
+        )
+      }
     },
     {
       field: "total_paid",
-      headerName: "Total",
+      headerName: "Paid",
+      flex: 0.5
+    },
+    {
+      field: "total_balance",
+      headerName: "Balance",
       flex: 0.5
     }
   ]
@@ -101,8 +137,13 @@ const Orders = () => {
             <Grid item xs={12}>
               <Box display="flex" justifyContent="space-between">
                 <Grid item xs={12} md={3}>
-                  <Paper component="form" className={classes.root}>
+                  <Paper
+                    component="form"
+                    className={classes.root}
+                    disableElevation
+                  >
                     <InputBase
+                      filled
                       className={classes.input}
                       placeholder="Search orders"
                       inputProps={{ "aria-label": "search orders" }}
