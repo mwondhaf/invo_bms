@@ -187,6 +187,7 @@ const Create = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setCustomerFieldError(false)
+    setCreateOrder(false)
 
     if (selectedCustomer && cart.length > 0 && amountPaid !== undefined) {
       // order
@@ -221,40 +222,26 @@ const Create = () => {
 
       // total balance
       if (amountPaid === 0) {
-        console.log("not paid")
         order.total_balance = prices_sum
-        setPaymentStatus("Not Paid")
-        // console.log(paymentStatus)
-      } else if (amountPaid < prices_sum) {
-        console.log("parital")
+        order.payment_status = "Not Paid"
+      } else if (amountPaid < prices_sum && amountPaid !== 0) {
         order.total_balance = prices_sum - amountPaid
-        setPaymentStatus("Partial")
-        // console.log(paymentStatus)
+        order.payment_status = "Partial"
       } else {
-        console.log("paid")
         order.total_balance = 0
-        setPaymentStatus("Paid")
-        // console.log(paymentStatus)
+        order.payment_status = "Paid"
       }
-      // {
-      //   amountPaid === 0
-      //     ? (function () {
-      //         console.log("hi")
-      //       },
-      //       console.log("not paid"))
-      //     : amountPaid < prices_sum
-      //     ? console.log("partial")
-      //     : console.log("paid")
-      // }
+
       // real total before discount
       order.real_total = totalDiscount + totalPrice
 
       // payment status
-      order.payment_status = paymentStatus
-      // `${api_url}/orders`
+
+      setCreateOrder(true)
+
       try {
-        await axios.post("http://localhost:9000/orders", order).then((res) => {
-          // history.push(`/checkout/${res.data.order_id}`)
+        await axios.post(`${api_url}/orders`, order).then((res) => {
+          history.push(`/orders`)
           console.log(res.data)
         })
       } catch (error) {
@@ -615,7 +602,7 @@ const Create = () => {
                                 onValueChange={(values) =>
                                   setAmountPaid(values.floatValue)
                                 }
-                                onChange={(e) => {
+                                onBlur={(e) => {
                                   e.persist()
                                   e.target = { amountPaid }
                                 }}
@@ -699,7 +686,6 @@ const Create = () => {
                                 }
                                 onClick={(e) => {
                                   handleSubmit(e)
-                                  setCreateOrder(!createOrder)
                                 }}
                               >
                                 {createOrder ? "Creating" : "Create Order"}

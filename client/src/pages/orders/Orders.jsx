@@ -13,6 +13,7 @@ import {
 import React, { useEffect, useState } from "react"
 import { DataGrid } from "@material-ui/data-grid"
 import axios from "axios"
+import moment from "moment"
 import api_url from "../../api/api"
 import IconButton from "@material-ui/core/IconButton"
 import MenuIcon from "@material-ui/icons/Menu"
@@ -55,19 +56,28 @@ const Orders = () => {
     fetchOrders()
   }, [])
 
+  // moment().format('MMMM Do YYYY, h:mm:ss a')
   const columns = [
     // { field: "_id", headerName: "ID", width: 70 },
-    { field: "order_id", headerName: "ORDER ID", width: 130 },
-    { field: "customer_name", headerName: "CUSTOMER", width: 130 },
+    { field: "order_id", headerName: "ORDER", width: 130 },
     {
-      field: "customer_phone",
-      headerName: "PHONE",
-      width: 200
+      field: "createdAt",
+      headerName: "DATE",
+      width: 140,
+      type: "date",
+      renderCell: (params) => {
+        return moment(params.formattedValue).format("MMMM Do YYYY, h:mm")
+      }
     },
     {
-      description: "This column has a value getter and is not sortable.",
-      sortable: false,
-      width: 160
+      field: "payment_status",
+      headerName: "Status",
+      flex: 1
+    },
+    {
+      field: "total_paid",
+      headerName: "Total",
+      flex: 0.5
     }
   ]
 
@@ -113,8 +123,9 @@ const Orders = () => {
                 getRowId={(row) => row._id}
                 rows={orders}
                 columns={columns}
-                pageSize={7}
+                autoPageSize={true}
                 checkboxSelection
+                sortModel={[{ field: "createdAt", sort: "desc" }]}
               />
             </div>
           </CardContent>

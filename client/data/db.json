@@ -204,6 +204,50 @@
       "real_total": 700,
       "payment_status": "Not Paid",
       "id": 7
+    },
+    {
+      "customer_name": "Frank Mwondha",
+      "customer_phone": 554259201,
+      "customer_address": "Dubai",
+      "products": [
+        {
+          "price": 40000,
+          "_id": "60b772a4134e95001566352f",
+          "productName": "Ggtth",
+          "category": "Hoes",
+          "quantity": 11,
+          "sale_price": 4000,
+          "cost": 44858,
+          "brand": "Sst",
+          "createdAt": "2021-06-02T11:59:32.986Z",
+          "updatedAt": "2021-06-02T11:59:32.986Z",
+          "__v": 0,
+          "quantity_ordered": 6,
+          "old_price": 40000
+        },
+        {
+          "price": 700,
+          "_id": "60b69b3b1d9b21001596efa8",
+          "productName": "Sheets",
+          "category": "Soft",
+          "quantity": 1000,
+          "sale_price": 700,
+          "cost": 500,
+          "brand": "Duos",
+          "createdAt": "2021-06-01T20:40:27.169Z",
+          "updatedAt": "2021-06-01T20:40:27.169Z",
+          "__v": 0,
+          "quantity_ordered": 1
+        }
+      ],
+      "payment_method": "Mobile Money",
+      "total_discount": 216000,
+      "total_price": 24700,
+      "total_paid": 2470,
+      "total_balance": 22230,
+      "real_total": 240700,
+      "payment_status": "Paid",
+      "id": 8
     }
   ],
   "customers": [
