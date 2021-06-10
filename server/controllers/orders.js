@@ -43,6 +43,17 @@ export const getOrders = async (req, res) => {
   }
 }
 
+// delete order
+export const deleteOrder = async (req, res) => {
+  const order_id = req.params.id
+  try {
+    await Order.findOneAndDelete({ order_id })
+    res.status(200).json("Order has been deleted")
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+}
+
 // const username = req.query.user
 // const catName = req.query.cat
 
@@ -59,21 +70,6 @@ export const getOrders = async (req, res) => {
 //   res.status(200).json(posts)
 // } catch (error) {
 //   res.status(404).json({ message: error.message })
-// }
-
-// delete product
-// export const deleteProduct = async (req, res) => {
-//   try {
-//     const product = await Product.findById(req.params.id)
-//     try {
-//       await product.delete()
-//       res.status(200).json("Product has been deleted")
-//     } catch (error) {
-//       res.status(500).json({ message: error.message })
-//     }
-//   } catch (error) {
-//     res.status(500).json({ message: error.message })
-//   }
 // }
 
 // update product
