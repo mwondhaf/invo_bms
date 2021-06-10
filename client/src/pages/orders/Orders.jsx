@@ -218,7 +218,7 @@ const Orders = () => {
                     disableElevation
                   >
                     <InputBase
-                      onChange={(e) => {
+                      onBlur={(e) => {
                         handleSearch(e)
                       }}
                       type="number"
