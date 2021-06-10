@@ -52,6 +52,10 @@ const useStyles = makeStyles((theme) => ({
   divider: {
     height: 28,
     margin: 4
+  },
+  deleteIcon: {
+    color: red,
+    cursor: "pointer"
   }
 }))
 
@@ -59,12 +63,13 @@ const Orders = () => {
   const classes = useStyles()
 
   const [orders, setOrders] = useState([])
+  const [orderDeleted, setOrderDeleted] = useState(false)
   const [searchError, setSearchError] = useState(false)
   const [query, setQuery] = useState("")
 
   useEffect(() => {
     fetchOrders()
-  }, [])
+  }, [orderDeleted])
 
   const fetchOrders = async () => {
     await axios.get(`${api_url}/orders`).then((res) => {
@@ -88,13 +93,34 @@ const Orders = () => {
       }
     }
   }
-  // moment().format('MMMM Do YYYY, h:mm:ss a')
+
+  const handleDelete = async (id) => {
+    setOrderDeleted(false)
+    try {
+      await axios.delete(`${api_url}/orders/${id}`).then((res) => {
+        setOrderDeleted(true)
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const columns = [
     // { field: "_id", headerName: "ID", width: 70 },
     {
       field: "order_id",
       headerName: "ORDER",
-      width: 130
+      width: 130,
+      renderCell: (params) => {
+        return (
+          <Link
+            to={`/order/${params.row.order_id}`}
+            style={{ textDecoration: "none" }}
+          >
+            <Button>{params.formattedValue}</Button>
+          </Link>
+        )
+      }
     },
     {
       field: "payment_status",
@@ -146,7 +172,12 @@ const Orders = () => {
       headerName: "Actions",
       flex: 0.5,
       renderCell: (params) => {
-        return <DeleteOutlineIcon onClick={() => console.log("jj")} />
+        return (
+          <DeleteOutlineIcon
+            className={classes.deleteIcon}
+            onClick={() => handleDelete(params.row.order_id)}
+          />
+        )
       }
     }
   ]
@@ -214,6 +245,7 @@ const Orders = () => {
                 pageSize={6}
                 checkboxSelection
                 sortModel={[{ field: "createdAt", sort: "desc" }]}
+                disableSelectionOnClick
               />
             </div>
           </CardContent>

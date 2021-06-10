@@ -14,6 +14,7 @@ import ProductDetail from "./pages/products/ProductDetail"
 import CheckOut from "./pages/orders/CheckOut"
 import { CartProvider } from "./context/CartContext"
 import ProductsGrid from "./pages/products/ProductsGrid"
+import OrderDetails from "./pages/orders/OrderDetails"
 
 const theme = createMuiTheme({
   palette: {
@@ -40,8 +41,8 @@ function App() {
         <Router>
           <Layout>
             <Switch>
-              <Route exact path="/checkout/:id">
-                <CheckOut />
+              <Route exact path="/order/:id">
+                <OrderDetails />
               </Route>
               <Route exact path="/">
                 <Home />
