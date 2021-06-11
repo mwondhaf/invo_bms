@@ -242,6 +242,7 @@ const Create = () => {
 
       try {
         await axios.post(`${api_url}/orders`, order).then((res) => {
+setCart([])
           history.push(`/order/${res.data.order_id}`)
           console.log(res.data)
         })
