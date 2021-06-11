@@ -36,8 +36,7 @@ import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline"
 import { Link } from "react-router-dom"
 import Backdrop from "@material-ui/core/Backdrop"
 import CircularProgress from "@material-ui/core/CircularProgress"
-import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer"
-import { PDFViewer } from "@react-pdf/renderer"
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
