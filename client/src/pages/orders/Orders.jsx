@@ -34,6 +34,11 @@ import HdrWeakIcon from "@material-ui/icons/HdrWeak"
 import TripOriginIcon from "@material-ui/icons/TripOrigin"
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline"
 import { Link } from "react-router-dom"
+import Backdrop from "@material-ui/core/Backdrop"
+import CircularProgress from "@material-ui/core/CircularProgress"
+import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer"
+import { PDFViewer } from "@react-pdf/renderer"
+
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: "2px 4px",
@@ -56,6 +61,19 @@ const useStyles = makeStyles((theme) => ({
   deleteIcon: {
     color: red,
     cursor: "pointer"
+  },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: "#fff"
+  },
+  page: {
+    flexDirection: "row",
+    backgroundColor: "#E4E4E4"
+  },
+  section: {
+    margin: 10,
+    padding: 10,
+    flexGrow: 1
   }
 }))
 
@@ -66,13 +84,16 @@ const Orders = () => {
   const [orderDeleted, setOrderDeleted] = useState(false)
   const [searchError, setSearchError] = useState(false)
   const [query, setQuery] = useState("")
+  const [isLoadingOrders, setIsLoadingOrders] = useState(false)
 
   useEffect(() => {
     fetchOrders()
   }, [orderDeleted])
 
   const fetchOrders = async () => {
+    setIsLoadingOrders(true)
     await axios.get(`${api_url}/orders`).then((res) => {
+      setIsLoadingOrders(false)
       setOrders(res.data)
     })
   }
@@ -175,7 +196,9 @@ const Orders = () => {
         return (
           <DeleteOutlineIcon
             className={classes.deleteIcon}
-            onClick={() => handleDelete(params.row.order_id)}
+            onClick={() => {
+              handleDelete(params.row.order_id)
+            }}
           />
         )
       }
@@ -236,6 +259,13 @@ const Orders = () => {
                 </Grid>
               </Box>
             </Grid>
+            <Backdrop
+              className={classes.backdrop}
+              open={isLoadingOrders}
+              // onClick={handleClose}
+            >
+              <CircularProgress color="inherit" />
+            </Backdrop>
             <div style={{ height: 450, width: "100%" }}>
               <DataGrid
                 getRowId={(row) => row._id}

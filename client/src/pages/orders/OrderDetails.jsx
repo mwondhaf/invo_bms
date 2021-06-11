@@ -10,10 +10,13 @@ import {
   Typography
 } from "@material-ui/core"
 import axios from "axios"
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { useHistory, useParams } from "react-router"
 import api_url from "../../api/api"
 import moment from "moment"
+
+import { useReactToPrint } from "react-to-print"
+import Invoice from "./Invoice"
 
 const OrderDetails = () => {
   const { id } = useParams()
@@ -21,6 +24,10 @@ const OrderDetails = () => {
   const [products, setProducts] = useState([])
   const [dateCreated, setDateCreated] = useState()
   const history = useHistory()
+  const componentRef = useRef()
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current
+  })
 
   useEffect(() => {
     const fetchOrderDetails = async () => {
@@ -66,6 +73,7 @@ const OrderDetails = () => {
         >
           ORDER ID - {id}
         </Typography>
+
         <Card elevation={0}>
           {orderDetails && (
             <>
@@ -124,7 +132,7 @@ const OrderDetails = () => {
                             UGX {product.price}
                           </Typography>
                           <Typography variant="body2" color="textSecondary">
-                            QTY: {product.quantity} // each @{" "}
+                            QTY: {product.quantity_ordered} // each @{" "}
                             {product.sale_price}
                           </Typography>
                         </Grid>
@@ -192,9 +200,15 @@ const OrderDetails = () => {
                 </Typography>
               </CardContent>
               <CardActions>
-                <Button size="small" variant="outlined">
+                {/* <Button onClick={() => history.push(`/invoice/${id}`)}>
+                  Invoice
+                </Button> */}
+                <Button onClick={handlePrint} size="small" variant="outlined">
                   PRINT
                 </Button>
+                <div style={{ display: "none" }}>
+                  <Invoice refPropWithAnotherName={componentRef} />
+                </div>
                 <Button
                   size="small"
                   variant="outlined"
