@@ -5,7 +5,9 @@ import {
   ListItemText,
   makeStyles
 } from "@material-ui/core"
-import React from "react"
+import React, { useContext, useEffect } from "react"
+import { useLocation } from "react-router-dom"
+import { HeaderContext } from "../context/HeaderContext"
 import { subMenu } from "../menuData/menu"
 import AppBarNav from "./AppBarNav"
 
@@ -16,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     background: "#F7FCFC",
     width: "100%",
     paddingTop: theme.spacing(2),
-    minHeight: "50vh"
+    minHeight: "80vh"
   },
   drawer: {
     width: drawerWidth
@@ -62,6 +64,18 @@ const useStyles = makeStyles((theme) => ({
 
 const Layout = ({ children }) => {
   const classes = useStyles()
+  const [showHeader, setShowHeader] = useContext(HeaderContext)
+
+  const location = useLocation()
+  const order_detail_location = location.pathname.split("/")[1]
+
+  useEffect(() => {
+    {
+      order_detail_location === "order"
+        ? setShowHeader(false)
+        : setShowHeader(true)
+    }
+  }, [location])
 
   return (
     <div>
@@ -75,16 +89,20 @@ const Layout = ({ children }) => {
               borderTop={3}
               borderColor="primary.light"
             >
-              {subMenu.map(({ text, index }) => (
-                <Box key={index} display={{ xs: "none", sm: "block" }}>
-                  <ListItem button>
-                    <ListItemText
-                      primary={text}
-                      classes={{ primary: classes.listItemText }}
-                    />
-                  </ListItem>
-                </Box>
-              ))}
+              {showHeader && (
+                <>
+                  {subMenu.map(({ text, index }) => (
+                    <Box key={index} display={{ xs: "none", sm: "block" }}>
+                      <ListItem button>
+                        <ListItemText
+                          primary={text}
+                          classes={{ primary: classes.listItemText }}
+                        />
+                      </ListItem>
+                    </Box>
+                  ))}
+                </>
+              )}
             </Box>
           </Grid>
         </Grid>

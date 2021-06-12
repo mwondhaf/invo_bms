@@ -12,6 +12,9 @@ import { useHistory } from "react-router"
 import Alert from "@material-ui/lab/Alert"
 import axios from "axios"
 import api_url from "../../api/api"
+import PhoneInput from "react-phone-input-2"
+
+import "react-phone-input-2/lib/material.css"
 
 const useStyles = makeStyles((theme) => ({
   field: {
@@ -26,7 +29,7 @@ const AddCustomer = () => {
   const history = useHistory()
 
   const [name, setName] = useState("")
-  const [phoneNumber, setPhoneNumber] = useState("")
+  const [phoneNumber, setPhoneNumber] = useState("+256")
   const [address, setAddress] = useState("")
   const [alreadyExist, setAlreadyExist] = useState(null)
 
@@ -36,7 +39,7 @@ const AddCustomer = () => {
 
     const customer = {
       name,
-      phoneNumber,
+      phoneNumber: phoneNumber.replace(/\s/g, ""),
       address
     }
 
@@ -64,14 +67,14 @@ const AddCustomer = () => {
               fullWidth
               onChange={(e) => setName(e.target.value)}
             />
-            <TextField
-              variant="outlined"
-              className={classes.field}
-              label="Phone"
-              type="tel"
-              required
-              fullWidth
-              onChange={(e) => setPhoneNumber(e.target.value)}
+            <PhoneInput
+              inputProps={{
+                prefix: "+"
+              }}
+              masks={{ ug: "... ... ..." }}
+              defaultCountry="UG"
+              value={phoneNumber}
+              onBlur={(e) => setPhoneNumber(e.target.value)}
             />
             <TextField
               className={classes.field}

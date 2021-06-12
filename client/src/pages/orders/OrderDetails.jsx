@@ -11,7 +11,7 @@ import {
   Typography
 } from "@material-ui/core"
 import axios from "axios"
-import React, { useEffect, useRef, useState } from "react"
+import React, { useContext, useEffect, useRef, useState } from "react"
 import { useHistory, useParams } from "react-router"
 import api_url from "../../api/api"
 import moment from "moment"
@@ -27,6 +27,9 @@ import EditAttributesIcon from "@material-ui/icons/EditAttributes"
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline"
 import { blue, green } from "@material-ui/core/colors"
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever"
+import { HeaderContext } from "../../context/HeaderContext"
+import ShareIcon from "@material-ui/icons/Share"
+import WhatsAppIcon from "@material-ui/icons/WhatsApp"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,6 +54,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const OrderDetails = () => {
+  const [showHeader, setShowHeader] = useContext(HeaderContext)
   const classes = useStyles()
   const { id } = useParams()
   const [orderDetails, setOrderDetails] = useState()
@@ -94,18 +98,33 @@ const OrderDetails = () => {
   return (
     <div>
       <Grid item xs={12}>
-        <Typography
-          variant="h5"
-          style={{
-            fontWeight: "900",
-            color: "#2E3C42",
-            // textAlign: "left",
-            paddingBottom: "10px",
-            paddingLeft: 10
-          }}
-        >
-          ORDER ID - {id}
-        </Typography>
+        <Box pb={2}>
+          <Grid container justify="center">
+            <Grid item xs={12}>
+              <Box display="flex" justifyContent="space-between">
+                <Typography
+                  variant="h6"
+                  style={{
+                    fontWeight: "900",
+                    color: "#2E3C42",
+                    // textAlign: "left",
+                    paddingBottom: "10px",
+                    paddingLeft: 10
+                  }}
+                >
+                  ORDER ID - {id}
+                </Typography>
+                <WhatsAppIcon
+                  onClick={() =>
+                    window.open(
+                      `https://wa.me/${orderDetails.customer_phone}?text=${window.location.href}`
+                    )
+                  }
+                />
+              </Box>
+            </Grid>
+          </Grid>
+        </Box>
 
         <Card elevation={0}>
           {orderDetails && (
@@ -304,12 +323,7 @@ const OrderDetails = () => {
                         </Typography>
                       </Paper>
                       <CardActions>
-                        <ButtonGroup
-                          size="large"
-                          fullWidth
-                          // color="primary"
-                          aria-label="primary button group"
-                        >
+                        <>
                           <Button
                             onClick={handlePrint}
                             startIcon={<PrintIcon />}
@@ -330,10 +344,8 @@ const OrderDetails = () => {
                             onClick={() => history.push("/create")}
                             style={{ color: green[500] }}
                             endIcon={<AddCircleOutlineIcon />}
-                          >
-                            NEW
-                          </Button>
-                        </ButtonGroup>
+                          ></Button>
+                        </>
                         {/* <Button onClick={() => history.push(`/invoice/${id}`)}>
                   Invoice
                 </Button> */}
