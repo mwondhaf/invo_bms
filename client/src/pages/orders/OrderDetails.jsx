@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     padding: theme.spacing(2),
+    paddingTop: 0,
     margin: "auto",
     maxWidth: 500
   },
@@ -233,18 +234,20 @@ const OrderDetails = () => {
                               {orderDetails.payment_status}
                             </Typography>
                           </Grid>
-                          <Grid item xs={6}>
-                            <Typography color="textSecondary">
-                              Total Discount :
-                            </Typography>
-                          </Grid>
-                          <Grid item xs={6}>
-                            {orderDetails.total_discount > 0 ? (
-                              <Typography align="right" color="textSecondary">
-                                {orderDetails.total_discount.toLocaleString()}
-                              </Typography>
-                            ) : null}
-                          </Grid>
+                          {orderDetails.total_discount > 0 ? (
+                            <>
+                              <Grid item xs={6}>
+                                <Typography color="textSecondary">
+                                  Total Discount :
+                                </Typography>
+                              </Grid>
+                              <Grid item xs={6}>
+                                <Typography align="right" color="textSecondary">
+                                  {orderDetails.total_discount.toLocaleString()}
+                                </Typography>
+                              </Grid>
+                            </>
+                          ) : null}
                           <Grid item xs={6}>
                             <Typography color="textSecondary">VAT :</Typography>
                           </Grid>
@@ -276,18 +279,20 @@ const OrderDetails = () => {
                               {orderDetails.total_paid.toLocaleString()}
                             </Typography>
                           </Grid>
-                          <Grid item xs={6}>
-                            <Typography color="textSecondary">
-                              Balance :
-                            </Typography>
-                          </Grid>
-                          <Grid item xs={6}>
-                            {orderDetails.total_balance > 0 ? (
-                              <Typography align="right" color="textSecondary">
-                                {orderDetails.total_balance.toLocaleString()}
-                              </Typography>
-                            ) : null}
-                          </Grid>
+                          {orderDetails.total_balance > 0 ? (
+                            <>
+                              <Grid item xs={6}>
+                                <Typography color="textSecondary">
+                                  Balance :
+                                </Typography>
+                              </Grid>
+                              <Grid item xs={6}>
+                                <Typography align="right" color="textSecondary">
+                                  {orderDetails.total_balance.toLocaleString()}
+                                </Typography>
+                              </Grid>
+                            </>
+                          ) : null}
                         </Grid>
 
                         <Typography
