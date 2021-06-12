@@ -56,7 +56,7 @@ const Invoice = ({ refPropWithAnotherName }) => {
           setOrderDetails(res.data)
           setProducts(res.data.products)
           setDateCreated(
-            moment(res.data.createdAt).format("MMMM Do YYYY, h:mm a")
+            moment(res.data.createdAt).format("MMMM Do YYYY, h:mm A")
           )
         })
       } catch (error) {
@@ -191,10 +191,12 @@ const Invoice = ({ refPropWithAnotherName }) => {
                     </Grid>
                     <Grid item xs={4}>
                       <Typography align="right" style={{ fontSize: "16px" }}>
-                        {product.sale_price}
-                        <Typography style={{ fontSize: "12px" }}>
-                          Original Price: {product.price}
-                        </Typography>
+                        {product.sale_price.toLocaleString()}
+                        {product.sale_price < product.price && (
+                          <Typography style={{ fontSize: "12px" }}>
+                            Original Price: {product.price.toLocaleString()}
+                          </Typography>
+                        )}
                       </Typography>
                     </Grid>
                     <Grid item xs={2}>
@@ -204,7 +206,9 @@ const Invoice = ({ refPropWithAnotherName }) => {
                     </Grid>
                     <Grid item xs={2}>
                       <Typography align="right" style={{ fontSize: "16px" }}>
-                        {product.sale_price * product.quantity_ordered}
+                        {(
+                          product.sale_price * product.quantity_ordered
+                        ).toLocaleString()}
                       </Typography>
                     </Grid>
                   </Grid>
@@ -248,21 +252,24 @@ const Invoice = ({ refPropWithAnotherName }) => {
                       </Typography>
                       {orderDetails.total_discount > 0 ? (
                         <Typography align="right" style={{ fontWeight: "400" }}>
-                          {orderDetails.total_discount}
+                          {orderDetails.total_discount.toLocaleString()}
                         </Typography>
                       ) : null}
                       <Typography align="right" style={{ fontWeight: "400" }}>
-                        {(18 / 100) * orderDetails.total_price}
+                        {(
+                          (18 / 100) *
+                          orderDetails.total_price
+                        ).toLocaleString()}
                       </Typography>
                       <Typography align="right" style={{ fontWeight: "400" }}>
                         {orderDetails.total_price}
                       </Typography>
                       <Typography align="right" style={{ fontWeight: "400" }}>
-                        {orderDetails.total_paid}
+                        {orderDetails.total_paid.toLocaleString()}
                       </Typography>
                       {orderDetails.total_balance > 0 ? (
                         <Typography align="right" style={{ fontWeight: "400" }}>
-                          {orderDetails.total_balance}
+                          {orderDetails.total_balance.toLocaleString()}
                         </Typography>
                       ) : null}
                     </Grid>

@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Card,
+  ButtonGroup,
   CardActions,
   CardContent,
   Divider,
@@ -18,7 +19,38 @@ import moment from "moment"
 import { useReactToPrint } from "react-to-print"
 import Invoice from "./Invoice"
 
+import { makeStyles } from "@material-ui/core/styles"
+import Paper from "@material-ui/core/Paper"
+import ButtonBase from "@material-ui/core/ButtonBase"
+import PrintIcon from "@material-ui/icons/Print"
+import EditAttributesIcon from "@material-ui/icons/EditAttributes"
+import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline"
+import { blue, green } from "@material-ui/core/colors"
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever"
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1
+  },
+  paper: {
+    padding: theme.spacing(2),
+    margin: "auto",
+    maxWidth: 500
+  },
+  image: {
+    width: 128,
+    height: 128
+  },
+  img: {
+    margin: "auto",
+    display: "block",
+    maxWidth: "100%",
+    maxHeight: "100%"
+  }
+}))
+
 const OrderDetails = () => {
+  const classes = useStyles()
   const { id } = useParams()
   const [orderDetails, setOrderDetails] = useState()
   const [products, setProducts] = useState([])
@@ -37,7 +69,7 @@ const OrderDetails = () => {
           setOrderDetails(res.data)
           setProducts(res.data.products)
           setDateCreated(
-            moment(res.data.createdAt).format("MMMM Do YYYY, h:mm a")
+            moment(res.data.createdAt).format("MMMM Do YYYY, h:mm A")
           )
         })
       } catch (error) {
@@ -78,161 +110,266 @@ const OrderDetails = () => {
           {orderDetails && (
             <>
               <CardContent>
-                <Typography color="textSecondary" gutterBottom>
-                  Placed on: {dateCreated}
-                </Typography>
-                <hr />
-                <Typography
-                  gutterBottom
-                  style={{
-                    fontWeight: "700",
-                    color: "#2E3C42"
-                  }}
-                >
-                  CUSTOMER DETAILS
-                </Typography>
-                <Typography color="textSecondary">
-                  {orderDetails.customer_name}
-                </Typography>
-                <Typography color="textSecondary">
-                  {orderDetails.customer_address}
-                </Typography>
-                <Typography color="textSecondary">
-                  {orderDetails.customer_phone}
-                </Typography>
-                <hr />
-                <Typography
-                  gutterBottom
-                  style={{
-                    fontWeight: "700",
-                    color: "#2E3C42"
-                  }}
-                >
-                  ORDER SUMMARY
-                </Typography>
-                {products.map((product) => (
-                  <div key={product._id}>
-                    <Grid container spacing={2}>
-                      <Grid item xs={12} sm container>
-                        <Grid item xs>
-                          <Typography
-                            gutterBottom
-                            variant="body2"
-                            style={{ fontWeight: "700" }}
-                          >
-                            {product.productName}
-                          </Typography>
-                          <Typography
-                            gutterBottom
-                            color="textSecondary"
-                            style={{
-                              fontWeight: "700"
-                            }}
-                          >
-                            UGX {product.price}
-                          </Typography>
-                          <Typography variant="body2" color="textSecondary">
-                            QTY: {product.quantity_ordered} // each @{" "}
-                            {product.sale_price}
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                    </Grid>
+                <Grid container>
+                  <Grid item xs={12} md={6}>
+                    <Typography color="textSecondary" gutterBottom>
+                      Placed on: {dateCreated}
+                    </Typography>
                     <Divider />
-                  </div>
-                ))}
-                <Typography
-                  gutterTop
-                  gutterBottom
-                  style={{
-                    paddingTop: "10px",
-                    fontWeight: "700",
-                    color: "#2E3C42"
-                  }}
-                >
-                  ORDER TOTALS - {orderDetails.payment_status}
-                </Typography>
-                <Typography color="textSecondary">
-                  Payment Method: {orderDetails.payment_method}
-                </Typography>
-                <Typography color="textSecondary">
-                  Payment Method: {orderDetails.payment_method}
-                </Typography>
-                {orderDetails.total_discount > 0 ? (
-                  <Typography color="textSecondary">
-                    Total Discount: {orderDetails.total_discount}
-                  </Typography>
-                ) : null}
-                <Typography
-                  style={{
-                    fontWeight: "700"
-                  }}
-                  color="textSecondary"
-                >
-                  Total Price: {orderDetails.total_price}
-                </Typography>
-                <Typography
-                  style={{
-                    fontWeight: "700"
-                  }}
-                  color="textSecondary"
-                >
-                  Amount Paid: {orderDetails.total_paid}
-                </Typography>
-                {orderDetails.total_balance > 0 ? (
-                  <Typography
-                    gutterBottom
-                    color="textSecondary"
-                    style={{
-                      fontWeight: "700"
-                    }}
-                  >
-                    Balance: {orderDetails.total_balance}
-                  </Typography>
-                ) : null}
+                    <Typography
+                      gutterBottom
+                      style={{
+                        fontWeight: "700",
+                        color: "#2E3C42"
+                      }}
+                    >
+                      CUSTOMER DETAILS
+                    </Typography>
+                    <Typography color="textSecondary">
+                      {orderDetails.customer_name}
+                    </Typography>
+                    <Typography color="textSecondary">
+                      {orderDetails.customer_address}
+                    </Typography>
+                    <Typography color="textSecondary">
+                      {orderDetails.customer_phone}
+                    </Typography>
+                    <Divider />
+                    <Typography
+                      gutterBottom
+                      style={{
+                        fontWeight: "700",
+                        color: "#2E3C42"
+                      }}
+                    >
+                      ORDER SUMMARY
+                    </Typography>
+                    {products.map((product) => (
+                      <div key={product._id} className={classes.root}>
+                        <Paper
+                          className={classes.paper}
+                          elevation={0}
+                          gutterBottom
+                        >
+                          <Grid container spacing={2}>
+                            <Grid item xs={12} sm container>
+                              <Grid
+                                item
+                                xs
+                                container
+                                direction="column"
+                                spacing={2}
+                              >
+                                <Grid item xs>
+                                  <Typography gutterBottom variant="subtitle1">
+                                    {product.productName}
+                                  </Typography>
+                                  <Typography variant="body2" gutterBottom>
+                                    Qty: {product.quantity_ordered} • each @
+                                    {product.sale_price.toLocaleString()}
+                                  </Typography>
+                                  <Typography
+                                    variant="body2"
+                                    color="textSecondary"
+                                  >
+                                    {product.brand} {product.category}
+                                  </Typography>
+                                </Grid>
+                              </Grid>
+                              <Grid item>
+                                <Typography variant="subtitle1">
+                                  {(
+                                    product.sale_price *
+                                    product.quantity_ordered
+                                  ).toLocaleString()}
+                                  /=
+                                </Typography>
+                              </Grid>
+                            </Grid>
+                          </Grid>
+                          <Divider />
+                        </Paper>
+                      </div>
+                    ))}
+                  </Grid>
 
-                <Typography
-                  variant="body2"
-                  style={{ paddingTop: "10px" }}
-                  component="p"
-                >
-                  {'"Thank you for your order :) "'}
-                </Typography>
-              </CardContent>
-              <CardActions>
-                {/* <Button onClick={() => history.push(`/invoice/${id}`)}>
+                  <Grid item xs={12} md={6}>
+                    <div className={classes.root}>
+                      <Paper
+                        className={classes.paper}
+                        elevation={0}
+                        gutterBottom
+                      >
+                        <Typography
+                          gutterTop
+                          gutterBottom
+                          style={{
+                            paddingTop: "10px",
+                            fontWeight: "700",
+                            color: "#2E3C42"
+                          }}
+                        >
+                          ORDER TOTALS
+                        </Typography>
+                        <Divider />
+                        <Grid container>
+                          <Grid item xs={6}>
+                            <Typography color="textSecondary">
+                              Payment Method :
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={6}>
+                            <Typography align="right" color="textSecondary">
+                              {orderDetails.payment_method}
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={6}>
+                            <Typography color="textSecondary">
+                              Payment Status :
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={6}>
+                            <Typography align="right" color="textSecondary">
+                              {orderDetails.payment_status}
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={6}>
+                            <Typography color="textSecondary">
+                              Total Discount :
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={6}>
+                            {orderDetails.total_discount > 0 ? (
+                              <Typography align="right" color="textSecondary">
+                                {orderDetails.total_discount.toLocaleString()}
+                              </Typography>
+                            ) : null}
+                          </Grid>
+                          <Grid item xs={6}>
+                            <Typography color="textSecondary">VAT :</Typography>
+                          </Grid>
+                          <Grid item xs={6}>
+                            <Typography align="right" color="textSecondary">
+                              {(
+                                (18 / 100) *
+                                orderDetails.total_price
+                              ).toLocaleString()}
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={6}>
+                            <Typography color="textSecondary">
+                              Total Price :
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={6}>
+                            <Typography align="right" color="textSecondary">
+                              {orderDetails.total_price.toLocaleString()}
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={6}>
+                            <Typography color="textSecondary">
+                              Total Paid :
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={6}>
+                            <Typography align="right" color="textSecondary">
+                              {orderDetails.total_paid.toLocaleString()}
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={6}>
+                            <Typography color="textSecondary">
+                              Balance :
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={6}>
+                            {orderDetails.total_balance > 0 ? (
+                              <Typography align="right" color="textSecondary">
+                                {orderDetails.total_balance.toLocaleString()}
+                              </Typography>
+                            ) : null}
+                          </Grid>
+                        </Grid>
+
+                        <Typography
+                          variant="body2"
+                          style={{ paddingTop: "10px" }}
+                          component="p"
+                        >
+                          {'"Thank you for your order :) "'}
+                        </Typography>
+                      </Paper>
+                      <CardActions>
+                        <ButtonGroup
+                          size="large"
+                          fullWidth
+                          // color="primary"
+                          aria-label="primary button group"
+                        >
+                          <Button
+                            onClick={handlePrint}
+                            startIcon={<PrintIcon />}
+                          />
+                          <Button
+                            onClick={() => handleDelete(id)}
+                            color="secondary"
+                            startIcon={<DeleteForeverIcon />}
+                          />
+                          <Button
+                            style={{ color: blue[500] }}
+                            startIcon={<EditAttributesIcon />}
+                          >
+                            EDIT
+                          </Button>
+
+                          <Button
+                            onClick={() => history.push("/create")}
+                            style={{ color: green[500] }}
+                            endIcon={<AddCircleOutlineIcon />}
+                          >
+                            NEW
+                          </Button>
+                        </ButtonGroup>
+                        {/* <Button onClick={() => history.push(`/invoice/${id}`)}>
                   Invoice
                 </Button> */}
-                <Button onClick={handlePrint} size="small" variant="outlined">
-                  PRINT
-                </Button>
-                <div style={{ display: "none" }}>
-                  <Invoice refPropWithAnotherName={componentRef} />
-                </div>
-                <Button
-                  size="small"
-                  variant="outlined"
-                  onClick={() => handleDelete(id)}
-                >
-                  DELETE ORDER
-                </Button>
-                <Button
-                  size="small"
-                  variant="outlined"
-                  onClick={() => history.push("/create")}
-                >
-                  NEW
-                </Button>
-                <Button
-                  size="small"
-                  variant="outlined"
-                  onClick={() => {
-                    history.push("/orders")
-                  }}
-                >
-                  {"<"}
-                </Button>
-              </CardActions>
+                        {/* <Button
+                            onClick={handlePrint}
+                            size="small"
+                            variant="outlined"
+                          >
+                            PRINT
+                          </Button> */}
+                        <div style={{ display: "none" }}>
+                          <Invoice refPropWithAnotherName={componentRef} />
+                        </div>
+                        {/* <Button
+                            size="small"
+                            variant="outlined"
+                            onClick={() => handleDelete(id)}
+                          >
+                            DELETE ORDER
+                          </Button>
+                          <Button
+                            size="small"
+                            variant="outlined"
+                            onClick={() => history.push("/create")}
+                          >
+                            NEW
+                          </Button> */}
+                        {/* <Button
+                            size="small"
+                            variant="outlined"
+                            onClick={() => {
+                              history.push("/orders")
+                            }}
+                          >
+                            {"<"}
+                          </Button> */}
+                      </CardActions>
+                    </div>
+                  </Grid>
+                </Grid>
+              </CardContent>
             </>
           )}
         </Card>
