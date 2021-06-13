@@ -37,7 +37,6 @@ import { Link } from "react-router-dom"
 import Backdrop from "@material-ui/core/Backdrop"
 import CircularProgress from "@material-ui/core/CircularProgress"
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: "2px 4px",
@@ -170,7 +169,7 @@ const Orders = () => {
     {
       field: "createdAt",
       headerName: "DATE",
-      width: 150,
+      width: 200,
       type: "date",
       renderCell: (params) => {
         return moment(params.formattedValue).format("MMMM Do YYYY, h:mm")
@@ -180,17 +179,17 @@ const Orders = () => {
     {
       field: "total_paid",
       headerName: "Paid",
-      width: 130
+      width: 200
     },
     {
       field: "total_balance",
       headerName: "Balance",
-      width: 130
+      width: 200
     },
     {
       field: "action",
       headerName: "Actions",
-      flex: 0.5,
+      flex: 150,
       renderCell: (params) => {
         return (
           <DeleteOutlineIcon

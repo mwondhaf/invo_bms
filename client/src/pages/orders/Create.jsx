@@ -54,15 +54,11 @@ const useStyles = makeStyles((theme) => ({
     borderTopLeftRadius: 0,
     borderBottomLeftRadius: 0,
     minHeight: "30vw",
-    // backgroundColor: theme.palette.primary.light,
-    // color: theme.palette.primary.contrastText,
     boxShadow: "none"
   },
   select_card: {
     borderTopRightRadius: 0,
     borderBottomRightRadius: 0,
-    // backgroundColor: theme.palette.primary.light,
-    // color: theme.palette.primary.contrastText,
     boxShadow: "none"
   },
   place_holder_card: {
@@ -196,6 +192,8 @@ const Create = () => {
         customer_name: selectedCustomer.name,
         customer_phone: selectedCustomer.phoneNumber,
         customer_address: selectedCustomer.address,
+        customer_email: selectedCustomer.email,
+        customer_other_details: selectedCustomer.otherDetails,
         products: cart
       }
 
@@ -242,7 +240,7 @@ const Create = () => {
 
       try {
         await axios.post(`${api_url}/orders`, order).then((res) => {
-setCart([])
+          setCart([])
           history.push(`/order/${res.data.order_id}`)
           console.log(res.data)
         })

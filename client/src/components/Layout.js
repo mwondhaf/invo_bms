@@ -15,7 +15,7 @@ const drawerWidth = 240
 
 const useStyles = makeStyles((theme) => ({
   page: {
-    background: "#F7FCFC",
+    background: "#e0f2f1",
     width: "100%",
     paddingTop: theme.spacing(2),
     minHeight: "80vh"

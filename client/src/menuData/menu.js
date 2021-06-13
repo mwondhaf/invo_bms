@@ -2,13 +2,14 @@ import LibraryBooksIcon from "@material-ui/icons/LibraryBooks"
 import { AddCircleOutlined, SubjectOutlined } from "@material-ui/icons"
 import LibraryAddIcon from "@material-ui/icons/LibraryAdd"
 import { ShoppingBag, Users, UserPlus } from "react-feather"
+import LineStyleIcon from "@material-ui/icons/LineStyle"
 import CategoryIcon from "@material-ui/icons/Category"
 
 const sub_menu_icon_color = "#0288d1"
 export const mainMenu = [
   {
     text: "Orders",
-    icon: <SubjectOutlined />,
+    icon: <LineStyleIcon />,
     path: "/orders",
     options: [
       {

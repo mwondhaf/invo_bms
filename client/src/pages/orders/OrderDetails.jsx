@@ -15,7 +15,7 @@ import React, { useContext, useEffect, useRef, useState } from "react"
 import { useHistory, useParams } from "react-router"
 import api_url from "../../api/api"
 import moment from "moment"
-
+import ArrowBackIcon from "@material-ui/icons/ArrowBack"
 import { useReactToPrint } from "react-to-print"
 import Invoice from "./Invoice"
 
@@ -70,7 +70,6 @@ const OrderDetails = () => {
     const fetchOrderDetails = async () => {
       try {
         await axios.get(`${api_url}/orders/${id}`).then((res) => {
-          console.log("res", res.data)
           setOrderDetails(res.data)
           setProducts(res.data.products)
           setDateCreated(
@@ -85,7 +84,6 @@ const OrderDetails = () => {
   }, [])
 
   const handleDelete = async (id) => {
-    console.log(id)
     try {
       await axios.delete(`${api_url}/orders/${id}`).then((res) => {
         history.push("/")
@@ -96,24 +94,30 @@ const OrderDetails = () => {
   }
 
   return (
-    <div>
+    <div className={classes.root}>
       <Grid item xs={12}>
         <Box pb={2}>
-          <Grid container justify="center">
+          <Grid container justify="center" spacing={2}>
             <Grid item xs={12}>
               <Box display="flex" justifyContent="space-between">
-                <Typography
-                  variant="h6"
-                  style={{
-                    fontWeight: "900",
-                    color: "#2E3C42",
-                    // textAlign: "left",
-                    paddingBottom: "10px",
-                    paddingLeft: 10
-                  }}
-                >
-                  ORDER ID - {id}
-                </Typography>
+                <Box display="flex" justifyContent="space-between">
+                  <ArrowBackIcon
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      history.push("/orders")
+                    }}
+                  />
+                  <Typography
+                    variant="h6"
+                    style={{
+                      fontWeight: "900",
+                      color: "#2E3C42",
+                      paddingLeft: 15
+                    }}
+                  >
+                    ORDER ID - {id}
+                  </Typography>
+                </Box>
                 <WhatsAppIcon
                   onClick={() =>
                     window.open(
@@ -154,6 +158,9 @@ const OrderDetails = () => {
                     <Typography color="textSecondary">
                       {orderDetails.customer_phone}
                     </Typography>
+                    <Typography color="textSecondary">
+                      {orderDetails.customer_email}
+                    </Typography>
                     <Divider />
                     <Typography
                       gutterBottom
@@ -165,7 +172,7 @@ const OrderDetails = () => {
                       ORDER SUMMARY
                     </Typography>
                     {products.map((product) => (
-                      <div key={product._id} className={classes.root}>
+                      <div key={product._id}>
                         <Paper
                           className={classes.paper}
                           elevation={0}

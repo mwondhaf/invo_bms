@@ -103,6 +103,9 @@ const Invoice = ({ refPropWithAnotherName }) => {
                   <Typography style={{ fontSize: "16px" }}>
                     {orderDetails.customer_phone}
                   </Typography>
+                  <Typography style={{ fontSize: "16px" }}>
+                    {orderDetails.customer_email}
+                  </Typography>
                 </Grid>
                 <Grid item xs={6} md={6}>
                   <Box display="flex" justifyContent="flex-end">
