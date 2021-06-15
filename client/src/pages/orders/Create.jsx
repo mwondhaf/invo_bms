@@ -110,7 +110,7 @@ const Create = () => {
     0
   )
   useEffect(() => {
-    setShowSearchBar(false)
+    setShowSearchBar(false) //hide search bar
     setCartTotal(totalPrice)
     setAmountPaid(totalPrice)
   }, [cart])
