@@ -1,14 +1,22 @@
 import { Container } from "@material-ui/core"
 import axios from "axios"
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { useHistory } from "react-router"
 import api_url from "../../api/api"
 import TableTemplate from "../../components/TableTemplate"
+import { SearchContext } from "../../context/SearchContext"
 
 const AllProducts = () => {
+  const [searchText, setSearchText, currentPage, setCurrentPage] =
+    useContext(SearchContext)
   const history = useHistory()
   const [products, setProducts] = useState([])
   const [watchDelete, setWatchDelete] = useState(false)
+
+  useEffect(() => {
+    setSearchText("Search products...")
+    setCurrentPage("Products")
+  }, [])
 
   useEffect(() => {
     const fetchProducts = async () => {

@@ -13,7 +13,7 @@ import {
   Paper,
   Typography
 } from "@material-ui/core"
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useRef, useState } from "react"
 import { DataGrid } from "@material-ui/data-grid"
 import axios from "axios"
 import moment from "moment"
@@ -36,6 +36,9 @@ import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline"
 import { Link } from "react-router-dom"
 import Backdrop from "@material-ui/core/Backdrop"
 import CircularProgress from "@material-ui/core/CircularProgress"
+import { SearchContext } from "../../context/SearchContext"
+import useFetch from "../../composables/useFetch"
+import useSkipFirstRender from "../../composables/useSkipFirstRender"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -77,24 +80,59 @@ const useStyles = makeStyles((theme) => ({
 
 const Orders = () => {
   const classes = useStyles()
-
   const [orders, setOrders] = useState([])
+  const [filteredOrders, setFilteredOrders] = useState(orders)
   const [orderDeleted, setOrderDeleted] = useState(false)
   const [searchError, setSearchError] = useState(false)
   const [query, setQuery] = useState("")
   const [isLoadingOrders, setIsLoadingOrders] = useState(false)
 
-  useEffect(() => {
-    fetchOrders()
-  }, [orderDeleted])
+  const [searchPlaceHolder, setSearchPlaceHolder, searchText, setSearchText] =
+    useContext(SearchContext)
 
-  const fetchOrders = async () => {
-    setIsLoadingOrders(true)
-    await axios.get(`${api_url}/orders`).then((res) => {
-      setIsLoadingOrders(false)
-      setOrders(res.data)
-    })
-  }
+  useSkipFirstRender(() => {
+    try {
+      const result = orders.filter((order) => order.order_id === searchText)
+      console.log(result)
+      if (result.length > 0) {
+        setFilteredOrders(result)
+      } else {
+        console.log("no orders found")
+        setFilteredOrders(orders)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }, [searchText])
+
+  useEffect(() => {
+    setSearchPlaceHolder("Search orders...")
+
+    let source = axios.CancelToken.source()
+    const fetchOrders = async () => {
+      setIsLoadingOrders(true)
+      try {
+        await axios
+          .get(`${api_url}/orders`, { cancelToken: source.token })
+          .then((res) => {
+            setIsLoadingOrders(false)
+            setOrders(res.data)
+            setFilteredOrders(res.data)
+          })
+      } catch (error) {
+        if (axios.isCancel(error)) {
+          console.log("fetch aborted")
+        } else {
+          throw error
+        }
+      }
+    }
+    fetchOrders()
+    // clean up
+    return () => {
+      source.cancel()
+    }
+  }, [orderDeleted])
 
   const handleSearch = (e) => {
     e.preventDefault()
@@ -108,7 +146,6 @@ const Orders = () => {
         setOrders(result)
       } else {
         setSearchError(!searchError)
-        fetchOrders()
       }
     }
   }
@@ -230,33 +267,6 @@ const Orders = () => {
         </Typography>
         <Card elevation={0}>
           <CardContent>
-            <Grid item xs={12}>
-              <Box display="flex" justifyContent="space-between">
-                <Grid item xs={12} md={3}>
-                  <Paper
-                    component="form"
-                    className={classes.root}
-                    disableElevation
-                  >
-                    <InputBase
-                      onBlur={(e) => {
-                        handleSearch(e)
-                      }}
-                      type="number"
-                      className={classes.input}
-                      placeholder="Search orders"
-                      inputProps={{ "aria-label": "search orders" }}
-                    />
-                    <IconButton
-                      className={classes.iconButton}
-                      aria-label="search"
-                    >
-                      <SearchIcon />
-                    </IconButton>
-                  </Paper>
-                </Grid>
-              </Box>
-            </Grid>
             <Backdrop
               className={classes.backdrop}
               open={isLoadingOrders}
@@ -267,7 +277,7 @@ const Orders = () => {
             <div style={{ height: 450, width: "100%" }}>
               <DataGrid
                 getRowId={(row) => row._id}
-                rows={orders}
+                rows={filteredOrders}
                 columns={columns}
                 // autoPageSize={true}
                 pageSize={6}

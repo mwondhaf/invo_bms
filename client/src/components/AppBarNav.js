@@ -17,6 +17,7 @@ import MoreIcon from "@material-ui/icons/MoreVert"
 import NavDrawer from "./NavDrawer"
 import { Grid } from "@material-ui/core"
 import { HeaderContext } from "../context/HeaderContext"
+import { SearchContext } from "../context/SearchContext"
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -91,6 +92,9 @@ export default function AppBarNav() {
   const isMenuOpen = Boolean(anchorEl)
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false)
+
+  const [searchPlaceHolder, setSearchPlaceHolder, searchText, setSearchText] =
+    useContext(SearchContext)
 
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen)
@@ -195,7 +199,12 @@ export default function AppBarNav() {
                       <SearchIcon />
                     </div>
                     <InputBase
-                      placeholder="Search…"
+                      onKeyPress={(e) => {
+                        if (e.key === "Enter") {
+                          setSearchText(e.target.value)
+                        }
+                      }}
+                      placeholder={searchPlaceHolder}
                       classes={{
                         root: classes.inputRoot,
                         input: classes.inputInput
