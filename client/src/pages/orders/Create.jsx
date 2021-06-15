@@ -30,6 +30,7 @@ import api_url from "../../api/api"
 import { CartContext } from "../../context/CartContext"
 import { SignalCellularNullTwoTone } from "@material-ui/icons"
 import { payment_methods } from "../../menuData/paymentMethods"
+import { SearchContext } from "../../context/SearchContext"
 
 const useStyles = makeStyles((theme) => ({
   field: {
@@ -92,6 +93,8 @@ const Create = () => {
   const [paymentStatus, setPaymentStatus] = useState("Paid")
   const [createOrder, setCreateOrder] = useState(false)
   const history = useHistory()
+
+  const { setShowSearchBar } = useContext(SearchContext)
   const { data: customers } = useFetch(`${api_url}/customers`)
   const { data: products } = useFetch(`${api_url}/products`)
 
@@ -107,6 +110,7 @@ const Create = () => {
     0
   )
   useEffect(() => {
+    setShowSearchBar(false)
     setCartTotal(totalPrice)
     setAmountPaid(totalPrice)
   }, [cart])

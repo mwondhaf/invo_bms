@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, useEffect } from "react"
 import { fade, makeStyles } from "@material-ui/core/styles"
 import AppBar from "@material-ui/core/AppBar"
 import Toolbar from "@material-ui/core/Toolbar"
@@ -93,7 +93,7 @@ export default function AppBarNav() {
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false)
 
-  const { searchPlaceHolder, setSearchPlaceHolder, searchText, setSearchText } =
+  const { showSearchBar, searchPlaceHolder, setSearchText } =
     useContext(SearchContext)
 
   const toggleDrawer = () => {
@@ -194,24 +194,26 @@ export default function AppBarNav() {
                   <Typography className={classes.title} variant="h6" noWrap>
                     Material-UI
                   </Typography>
-                  <div className={classes.search}>
-                    <div className={classes.searchIcon}>
-                      <SearchIcon />
+                  {showSearchBar && (
+                    <div className={classes.search}>
+                      <div className={classes.searchIcon}>
+                        <SearchIcon />
+                      </div>
+                      <InputBase
+                        onKeyPress={(e) => {
+                          if (e.key === "Enter") {
+                            setSearchText(e.target.value)
+                          }
+                        }}
+                        placeholder={searchPlaceHolder}
+                        classes={{
+                          root: classes.inputRoot,
+                          input: classes.inputInput
+                        }}
+                        inputProps={{ "aria-label": "search" }}
+                      />
                     </div>
-                    <InputBase
-                      onKeyPress={(e) => {
-                        if (e.key === "Enter") {
-                          setSearchText(e.target.value)
-                        }
-                      }}
-                      placeholder={searchPlaceHolder}
-                      classes={{
-                        root: classes.inputRoot,
-                        input: classes.inputInput
-                      }}
-                      inputProps={{ "aria-label": "search" }}
-                    />
-                  </div>
+                  )}
                   <div className={classes.grow} />
                   <div className={classes.sectionDesktop}>
                     <IconButton aria-label="show 4 new mails" color="inherit">

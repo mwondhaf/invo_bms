@@ -7,18 +7,13 @@ import TableTemplate from "../../components/TableTemplate"
 import { SearchContext } from "../../context/SearchContext"
 
 const AllProducts = () => {
-  const [searchText, setSearchText, currentPage, setCurrentPage] =
-    useContext(SearchContext)
+  const { searchText, setSearchPlaceHolder } = useContext(SearchContext)
   const history = useHistory()
   const [products, setProducts] = useState([])
   const [watchDelete, setWatchDelete] = useState(false)
 
   useEffect(() => {
-    setSearchText("Search products...")
-    setCurrentPage("Products")
-  }, [])
-
-  useEffect(() => {
+    setSearchPlaceHolder("Search products...")
     const fetchProducts = async () => {
       axios.get(`${api_url}/products`).then((res) => setProducts(res.data))
     }

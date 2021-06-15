@@ -86,7 +86,8 @@ const Orders = () => {
   const [searchError, setSearchError] = useState(false)
   const [isLoadingOrders, setIsLoadingOrders] = useState(false)
 
-  const { setSearchPlaceHolder, searchText } = useContext(SearchContext)
+  const { setShowSearchBar, setSearchPlaceHolder, searchText } =
+    useContext(SearchContext)
 
   useSkipFirstRender(() => {
     try {
@@ -104,6 +105,7 @@ const Orders = () => {
   }, [searchText])
 
   useEffect(() => {
+    setShowSearchBar(true)
     setSearchPlaceHolder("Search orders...")
 
     let source = axios.CancelToken.source()
