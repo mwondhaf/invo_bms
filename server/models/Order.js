@@ -14,6 +14,14 @@ const OrderSchema = new mongoose.Schema(
       type: String,
       required: false
     },
+    customer_email: {
+      type: String,
+      required: false
+    },
+    customer_other_details: {
+      type: String,
+      required: false
+    },
     payment_method: {
       type: String,
       required: true

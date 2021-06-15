@@ -84,11 +84,9 @@ const Orders = () => {
   const [filteredOrders, setFilteredOrders] = useState(orders)
   const [orderDeleted, setOrderDeleted] = useState(false)
   const [searchError, setSearchError] = useState(false)
-  const [query, setQuery] = useState("")
   const [isLoadingOrders, setIsLoadingOrders] = useState(false)
 
-  const [searchPlaceHolder, setSearchPlaceHolder, searchText, setSearchText] =
-    useContext(SearchContext)
+  const { setSearchPlaceHolder, searchText } = useContext(SearchContext)
 
   useSkipFirstRender(() => {
     try {
@@ -133,22 +131,6 @@ const Orders = () => {
       source.cancel()
     }
   }, [orderDeleted])
-
-  const handleSearch = (e) => {
-    e.preventDefault()
-    setSearchError(!searchError)
-
-    const query = e.target.value.trim()
-
-    if (query) {
-      const result = orders.filter((order) => order.order_id === query)
-      if (result.length > 0) {
-        setOrders(result)
-      } else {
-        setSearchError(!searchError)
-      }
-    }
-  }
 
   const handleDelete = async (id) => {
     setOrderDeleted(false)

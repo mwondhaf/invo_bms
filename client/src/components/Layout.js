@@ -92,7 +92,7 @@ const Layout = ({ children }) => {
               {showHeader && (
                 <>
                   {subMenu.map(({ text, index }) => (
-                    <Box key={index} display={{ xs: "none", sm: "block" }}>
+                    <Box key={text} display={{ xs: "none", sm: "block" }}>
                       <ListItem button>
                         <ListItemText
                           primary={text}

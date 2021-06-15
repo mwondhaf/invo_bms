@@ -14,6 +14,14 @@ const CustomerSchema = new mongoose.Schema(
     address: {
       type: String,
       required: false
+    },
+    email: {
+      type: String,
+      required: false
+    },
+    otherDetails: {
+      type: String,
+      required: false
     }
   },
   { timestamps: true }

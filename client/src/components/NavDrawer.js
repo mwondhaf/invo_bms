@@ -72,7 +72,7 @@ export default function NavDrawer({ isDrawerOpen, toggleDrawer }) {
                     <List>
                       {options.map(({ path, icon, text, index }) => (
                         <ListItem
-                          key={index}
+                          key={path}
                           button
                           onClick={() => {
                             toggleDrawer()

@@ -7,34 +7,20 @@ import {
   CardContent,
   Snackbar,
   Button,
-  Box,
   Avatar,
-  ExpandMoreIcon,
-  ShareIcon,
-  FavoriteIcon,
   IconButton,
-  Collapse,
   CardHeader
 } from "@material-ui/core"
 import MuiAlert from "@material-ui/lab/Alert"
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import axios from "axios"
 import api_url from "../../api/api"
-import { MessageCircle, UserMinus, Send } from "react-feather"
-import MoreVertIcon from "@material-ui/icons/MoreVert"
-import { TextFields } from "@material-ui/icons"
-import TextField from "@material-ui/core/TextField"
+import { UserMinus, Send } from "react-feather"
+import { SearchContext } from "../../context/SearchContext"
+import useSkipFirstRender from "../../composables/useSkipFirstRender"
 
 const useStyles = makeStyles((theme) => ({
-  // root: {
-  //   display: "flex",
-  //   "& > * + *": {
-  //     marginLeft: theme.spacing(2)
-  //   }
-  // },
-
   root: {
-    // minWidth: 275
     margin: theme.spacing(0.2),
     border: "none",
     paddingBottom: "0px"
@@ -54,23 +40,60 @@ const useStyles = makeStyles((theme) => ({
 
 const CustomerList = () => {
   const classes = useStyles()
-  const [data, setData] = useState()
+  const [data, setData] = useState([])
+  const [filteredCustomers, setFilteredCustomers] = useState(data)
   const [loading, setLoading] = useState(true)
   const [watchDelete, setWatchDelete] = useState(false)
   const [deleteAlert, setDeleteAlert] = useState(false)
   const [open, setOpen] = React.useState(false)
+  const { setSearchPlaceHolder, searchText } = useContext(SearchContext)
 
-  console.log(data)
+  console.log("data", data)
+  console.log(searchText)
+
+  useSkipFirstRender(() => {
+    const phone = parseInt(searchText)
+    try {
+      const result = data.filter((customer) => customer.phoneNumber === phone)
+      if (result.length > 0) {
+        setFilteredCustomers(result)
+      } else {
+        console.log("no orders found")
+        setFilteredCustomers(data)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }, [searchText])
+
+  // fetch customers
   useEffect(() => {
+    setSearchPlaceHolder("Search customer...")
+    let source = axios.CancelToken.source()
     const fetchCustomers = async () => {
-      axios.get(`${api_url}/customers`).then((res) => {
-        setData(res.data)
-        setLoading(false)
-      })
+      try {
+        await axios
+          .get(`${api_url}/customers`, { cancelToken: source.token })
+          .then((res) => {
+            setData(res.data)
+            setFilteredCustomers(res.data)
+            setLoading(false)
+          })
+      } catch (error) {
+        if (axios.isCancel(error)) {
+          console.log("fetch aborted")
+        } else {
+          throw error
+        }
+      }
     }
     fetchCustomers()
+    return () => {
+      source.cancel()
+    }
   }, [watchDelete])
 
+  // delete customer
   const handleDelete = (_id) => {
     axios.delete(`${api_url}/customers/${_id}`).then(() => {
       setWatchDelete(!watchDelete)
@@ -107,9 +130,9 @@ const CustomerList = () => {
         {data && data.length > 0 && (
           <>
             <Grid container>
-              {data
+              {filteredCustomers
                 .map((customer) => (
-                  <Grid item xs={12} sm={6} md={4}>
+                  <Grid key={customer._id} item xs={12} sm={6} md={4}>
                     <Card
                       className={classes.root}
                       variant="outlined"

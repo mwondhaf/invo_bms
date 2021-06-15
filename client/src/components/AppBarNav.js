@@ -93,7 +93,7 @@ export default function AppBarNav() {
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false)
 
-  const [searchPlaceHolder, setSearchPlaceHolder, searchText, setSearchText] =
+  const { searchPlaceHolder, setSearchPlaceHolder, searchText, setSearchText } =
     useContext(SearchContext)
 
   const toggleDrawer = () => {
